@@ -1,151 +1,34 @@
-/* Reset and Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    line-height: 1.6;
-    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
     background-color: #f5f5f5;
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
-/* Header Styles */
-header {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    padding: 60px 0;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
 }
 
-header h1 {
+h1 {
     font-size: 3rem;
-    font-weight: 700;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    margin-bottom: 1rem;
+    color: #333;
 }
 
-.tagline {
-    font-size: 1.3rem;
-    font-weight: 300;
-    opacity: 0.95;
+p {
+    font-size: 1.2rem;
+    color: #666;
 }
 
-/* Main Content Sections */
-main {
-    background: white;
-}
-
-section {
-    padding: 60px 0;
-}
-
-section:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-section h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #667eea;
-}
-
-section p {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    max-width: 800px;
-}
-
-/* Hero Section */
-.hero {
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-    text-align: center;
-}
-
-.hero h2 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-}
-
-.hero p {
-    font-size: 1.3rem;
-    margin: 0 auto;
-}
-
-/* About Section */
-.about {
-    text-align: center;
-}
-
-/* Projects Section */
-.projects {
-    text-align: center;
-}
-
-/* Contact Section */
-.contact {
-    text-align: center;
-}
-
-/* Links */
 a {
-    color: #667eea;
+    color: #0366d6;
     text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
 }
 
 a:hover {
-    color: #764ba2;
     text-decoration: underline;
-}
-
-/* Footer */
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 30px 0;
-    margin-top: 0;
-}
-
-footer p {
-    font-size: 0.9rem;
-    opacity: 0.8;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    header h1 {
-        font-size: 2rem;
-    }
-
-    .tagline {
-        font-size: 1rem;
-    }
-
-    section h2 {
-        font-size: 1.5rem;
-    }
-
-    section p {
-        font-size: 1rem;
-    }
-
-    .hero h2 {
-        font-size: 1.8rem;
-    }
-
-    .hero p {
-        font-size: 1.1rem;
-    }
 }
