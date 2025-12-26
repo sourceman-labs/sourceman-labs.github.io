@@ -1,0 +1,38 @@
+{
+  "name": "sourceman-blog",
+  "version": "1.0.0",
+  "description": "Static blog generator for sourceman.se using Eleventy and local markdown files",
+  "type": "module",
+  "scripts": {
+    "dev": "NODE_ENV=development pnpm exec eleventy --serve",
+    "build": "NODE_ENV=production pnpm exec eleventy",
+    "preview": "pnpm exec eleventy --serve --input=_site",
+    "clean": "rm -rf _site .cache",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [
+    "blog",
+    "static-site-generator",
+    "eleventy",
+    "markdown",
+    "typescript"
+  ],
+  "author": "Magnus Källman",
+  "license": "MIT",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.0",
+    "@11ty/eleventy-plugin-syntaxhighlight": "^5.0.0",
+    "dotenv": "^16.4.7",
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^14.1.0"
+  },
+  "devDependencies": {
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}

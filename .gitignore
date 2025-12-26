@@ -1,0 +1,61 @@
+# Environment variables & secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets/
+config/local.json
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Eleventy build output
+_site/
+_tmp/
+.cache/
+
+# TypeScript
+*.tsbuildinfo
+dist/
+build/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Testing
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+*.log
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Contentful local cache (if implemented)
+.contentful-cache/
+
+# ngrok
+ngrok.log
+ngrok.yml

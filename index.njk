@@ -1,0 +1,71 @@
+---
+layout: layouts/base.njk
+title: Home
+description: A programming blog about code, development, and open source
+---
+
+<div class="home">
+  <section class="hero">
+    <h1 class="hero-title">Welcome to sourceman</h1>
+    <p class="hero-description">
+      Exploring code, development practices, and the open source ecosystem.
+      Thoughts on programming, tools, and building software.
+    </p>
+  </section>
+
+  <section class="posts-section">
+    <h2 class="section-title">Recent Posts</h2>
+
+    {%- if posts and posts.length > 0 %}
+    <div class="posts-list">
+      {%- for post in posts | limit(10) %}
+      <article class="post-card">
+        <h3 class="post-card-title">
+          <a href="{{ post.url }}" class="post-card-link">
+            {{ post.title }}
+          </a>
+        </h3>
+
+        {%- if post.excerpt %}
+        <p class="post-card-excerpt">{{ post.excerpt }}</p>
+        {%- endif %}
+
+        <div class="post-card-meta">
+          <time datetime="{{ post.publishedDate | isoDate }}" class="post-card-date">
+            {{ post.publishedDate | readableDate }}
+          </time>
+
+          {%- if post.readingTime %}
+          <span class="separator">•</span>
+          <span class="post-card-reading-time">{{ post.readingTime }} min read</span>
+          {%- endif %}
+
+          {%- if post.tags and post.tags.length > 0 %}
+          <span class="separator">•</span>
+          <span class="post-card-tags">
+            {%- for tag in post.tags | limit(3) %}
+              <span class="tag">#{{ tag }}</span>
+            {%- endfor %}
+          </span>
+          {%- endif %}
+        </div>
+      </article>
+      {%- endfor %}
+    </div>
+
+    {%- if posts.length > 10 %}
+    <div class="view-all">
+      <a href="/blog/" class="view-all-link">View all posts →</a>
+    </div>
+    {%- endif %}
+
+    {%- else %}
+    <div class="no-posts">
+      <p>No posts yet. Check back soon!</p>
+      <p class="hint">
+        <em>Create your first post in the <code>posts/</code> directory!</em>
+      </p>
+    </div>
+    {%- endif %}
+  </section>
+</div>

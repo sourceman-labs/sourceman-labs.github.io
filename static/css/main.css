@@ -1,0 +1,576 @@
+/* Catppuccin Color Palette with Custom Black Background */
+:root {
+  /* Dark theme (Catppuccin Mocha with custom background) */
+  --bg: #1e1e1e;
+  --bg-secondary: #181825;
+  --bg-tertiary: #11111b;
+  --surface-0: #313244;
+  --surface-1: #45475a;
+  --surface-2: #585b70;
+  --text: #cdd6f4;
+  --text-secondary: #bac2de;
+  --text-muted: #a6adc8;
+  --accent: #89b4fa;
+  --accent-hover: #74c7ec;
+  --border: #45475a;
+  --link: #89b4fa;
+  --link-hover: #74c7ec;
+
+  /* Terminal colors */
+  --prompt: #f38ba8;
+  --command: #a6e3a1;
+
+  /* Syntax highlighting base colors */
+  --code-bg: #181825;
+  --code-border: #313244;
+  --inline-code-bg: #313244;
+  --inline-code-text: #f5e0dc;
+}
+
+/* Light theme (Catppuccin Latte) */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #eff1f5;
+    --bg-secondary: #e6e9ef;
+    --bg-tertiary: #dce0e8;
+    --surface-0: #ccd0da;
+    --surface-1: #bcc0cc;
+    --surface-2: #acb0be;
+    --text: #4c4f69;
+    --text-secondary: #5c5f77;
+    --text-muted: #6c6f85;
+    --accent: #1e66f5;
+    --accent-hover: #04a5e5;
+    --border: #ccd0da;
+    --link: #1e66f5;
+    --link-hover: #04a5e5;
+
+    --prompt: #d20f39;
+    --command: #40a02b;
+
+    --code-bg: #e6e9ef;
+    --code-border: #ccd0da;
+    --inline-code-bg: #dce0e8;
+    --inline-code-text: #dc8a78;
+  }
+}
+
+/* Override for manual theme toggle */
+[data-theme="light"] {
+  --bg: #eff1f5;
+  --bg-secondary: #e6e9ef;
+  --bg-tertiary: #dce0e8;
+  --surface-0: #ccd0da;
+  --surface-1: #bcc0cc;
+  --surface-2: #acb0be;
+  --text: #4c4f69;
+  --text-secondary: #5c5f77;
+  --text-muted: #6c6f85;
+  --accent: #1e66f5;
+  --accent-hover: #04a5e5;
+  --border: #ccd0da;
+  --link: #1e66f5;
+  --link-hover: #04a5e5;
+
+  --prompt: #d20f39;
+  --command: #40a02b;
+
+  --code-bg: #e6e9ef;
+  --code-border: #ccd0da;
+  --inline-code-bg: #dce0e8;
+  --inline-code-text: #dc8a78;
+}
+
+/* Font Face */
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/static/fonts/jetbrains-mono.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'JetBrains Mono', monospace;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Container */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Terminal Logo */
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.terminal-window {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  padding: 0.5rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.terminal-window:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.terminal-header {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.terminal-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--surface-1);
+}
+
+.terminal-body {
+  font-size: 1.1rem;
+  padding: 0.25rem;
+}
+
+.prompt {
+  color: var(--prompt);
+  margin-right: 0.5rem;
+}
+
+.command {
+  color: var(--command);
+  font-weight: bold;
+}
+
+/* Navigation */
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--accent);
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1.2rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--surface-0);
+  border-color: var(--accent);
+}
+
+.theme-icon {
+  display: inline-block;
+}
+
+/* Main Content */
+.main-content {
+  min-height: 60vh;
+}
+
+/* Home Page */
+.hero {
+  margin-bottom: 3rem;
+}
+
+.hero-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  color: var(--text);
+}
+
+/* Posts List */
+.posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.post-card {
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.post-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.post-card-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.post-card-link {
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.post-card-link:hover {
+  color: var(--accent);
+}
+
+.post-card-excerpt {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  line-height: 1.7;
+}
+
+.post-card-meta {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.separator {
+  color: var(--surface-2);
+}
+
+.tag {
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+/* View All Link */
+.view-all {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.view-all-link {
+  color: var(--link);
+  text-decoration: none;
+  font-size: 1.1rem;
+  transition: color 0.2s ease;
+}
+
+.view-all-link:hover {
+  color: var(--link-hover);
+}
+
+/* No Posts Message */
+.no-posts {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+}
+
+.no-posts .hint {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Post Article */
+.post {
+  max-width: 70ch;
+  margin: 0 auto;
+}
+
+.post-header {
+  margin-bottom: 3rem;
+}
+
+.post-title {
+  font-size: 2.5rem;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.post-excerpt {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: var(--bg-secondary);
+  border-left: 3px solid var(--accent);
+}
+
+/* Post Content Styles */
+.post-content {
+  line-height: 1.8;
+  color: var(--text);
+}
+
+.post-content h2 {
+  font-size: 2rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.post-content h3 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  color: var(--text);
+}
+
+.post-content h4 {
+  font-size: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.post-content p {
+  margin-bottom: 1.5rem;
+}
+
+.post-content a {
+  color: var(--link);
+  text-decoration: underline;
+  transition: color 0.2s ease;
+}
+
+.post-content a:hover {
+  color: var(--link-hover);
+}
+
+.post-content ul,
+.post-content ol {
+  margin-bottom: 1.5rem;
+  padding-left: 2rem;
+}
+
+.post-content li {
+  margin-bottom: 0.5rem;
+}
+
+.post-content blockquote {
+  border-left: 3px solid var(--accent);
+  padding-left: 1rem;
+  margin: 2rem 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.post-content pre {
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: 6px;
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 2rem 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.post-content code.inline-code,
+.post-content p code,
+.post-content li code {
+  background: var(--inline-code-bg);
+  color: var(--inline-code-text);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+.post-content pre code {
+  background: none;
+  padding: 0;
+  color: var(--text);
+}
+
+.post-content hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 3rem 0;
+}
+
+/* Post Footer */
+.post-footer {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.update-notice {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Post Navigation */
+.post-navigation {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.post-nav-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.post-nav-link {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.post-nav-link:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.nav-label {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+
+.nav-title {
+  color: var(--accent);
+}
+
+.post-nav-next {
+  text-align: right;
+}
+
+/* Footer */
+.site-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  margin-top: 0.5rem;
+}
+
+.footer-links a {
+  color: var(--link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--link-hover);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  .container {
+    padding: 1.5rem 1rem;
+  }
+
+  .site-header {
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: flex-start;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .post-title {
+    font-size: 2rem;
+  }
+
+  .post-nav-links {
+    grid-template-columns: 1fr;
+  }
+}

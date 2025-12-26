@@ -1,0 +1,76 @@
+---
+layout: layouts/base.njk
+---
+
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ title }}</h1>
+
+    <div class="post-meta">
+      <time datetime="{{ publishedDate | isoDate }}" class="post-date">
+        {{ publishedDate | readableDate }}
+      </time>
+
+      {%- if readingTime %}
+      <span class="separator">•</span>
+      <span class="reading-time">{{ readingTime }} min read</span>
+      {%- endif %}
+
+      {%- if author %}
+      <span class="separator">•</span>
+      <span class="post-author">{{ author }}</span>
+      {%- endif %}
+    </div>
+
+    {%- if tags and tags.length > 0 %}
+    <div class="post-tags">
+      {%- for tag in tags %}
+      <span class="tag">#{{ tag }}</span>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+
+    {%- if excerpt %}
+    <p class="post-excerpt">{{ excerpt }}</p>
+    {%- endif %}
+  </header>
+
+  <div class="post-content">
+    {{ content | safe }}
+  </div>
+
+  {%- if updatedDate and updatedDate != publishedDate %}
+  <footer class="post-footer">
+    <p class="update-notice">
+      Last updated: <time datetime="{{ updatedDate | isoDate }}">{{ updatedDate | readableDate }}</time>
+    </p>
+  </footer>
+  {%- endif %}
+</article>
+
+{# Navigation to previous/next posts #}
+<nav class="post-navigation" aria-label="Post navigation">
+  {%- if collections.posts %}
+    {%- set postIndex = collections.posts | findIndex(page.url) %}
+    {%- set previousPost = collections.posts[postIndex + 1] %}
+    {%- set nextPost = collections.posts[postIndex - 1] %}
+
+    {%- if previousPost or nextPost %}
+    <div class="post-nav-links">
+      {%- if previousPost %}
+      <a href="{{ previousPost.url }}" class="post-nav-link post-nav-prev" rel="prev">
+        <span class="nav-label">← Previous</span>
+        <span class="nav-title">{{ previousPost.data.title }}</span>
+      </a>
+      {%- endif %}
+
+      {%- if nextPost %}
+      <a href="{{ nextPost.url }}" class="post-nav-link post-nav-next" rel="next">
+        <span class="nav-label">Next →</span>
+        <span class="nav-title">{{ nextPost.data.title }}</span>
+      </a>
+      {%- endif %}
+    </div>
+    {%- endif %}
+  {%- endif %}
+</nav>

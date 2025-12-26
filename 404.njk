@@ -1,0 +1,216 @@
+---
+layout: layouts/base.njk
+title: 404 - Command Not Found
+description: Page not found
+permalink: /404.html
+eleventyExcludeFromCollections: true
+---
+
+<div class="error-page">
+  <div class="error-terminal">
+    <div class="terminal-window">
+      <div class="terminal-header">
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+        <span class="terminal-dot"></span>
+      </div>
+      <div class="terminal-body terminal-error">
+        <pre class="error-output">
+<span class="prompt">&gt;_</span> <span class="command">cd {{ page.url }}</span>
+
+<span class="error-text">bash: cd: {{ page.url }}: No such file or directory</span>
+<span class="error-code">Error: 404</span>
+        </pre>
+      </div>
+    </div>
+  </div>
+
+  <div class="error-content">
+    <h1 class="error-title">Command Not Found</h1>
+    <p class="error-description">
+      The page you're looking for doesn't exist or has been moved.
+    </p>
+
+    <div class="error-suggestions">
+      <h2>Suggestions:</h2>
+      <ul class="suggestion-list">
+        <li>
+          <a href="/" class="suggestion-link">
+            <span class="prompt">&gt;_</span> <span class="command">cd ~</span>
+            <span class="description">Go to home page</span>
+          </a>
+        </li>
+        <li>
+          <a href="/blog/" class="suggestion-link">
+            <span class="prompt">&gt;_</span> <span class="command">cd blog/</span>
+            <span class="description">Browse all posts</span>
+          </a>
+        </li>
+        <li>
+          <a href="javascript:history.back()" class="suggestion-link">
+            <span class="prompt">&gt;_</span> <span class="command">cd ..</span>
+            <span class="description">Go back to previous page</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    {%- if posts and posts.length > 0 %}
+    <div class="error-recent-posts">
+      <h2>Recent Posts:</h2>
+      <ul class="recent-posts-list">
+        {%- for post in posts | limit(5) %}
+        <li>
+          <a href="{{ post.url }}" class="post-link">
+            <span class="prompt">&gt;_</span> <span class="post-title">{{ post.title }}</span>
+          </a>
+        </li>
+        {%- endfor %}
+      </ul>
+    </div>
+    {%- endif %}
+  </div>
+</div>
+
+<style>
+/* 404 Page Specific Styles */
+.error-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 0;
+}
+
+.error-terminal {
+  margin-bottom: 3rem;
+}
+
+.error-terminal .terminal-window {
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  padding: 0.5rem;
+}
+
+.error-terminal .terminal-body {
+  padding: 1rem;
+  font-size: 0.95rem;
+}
+
+.error-output {
+  margin: 0;
+  line-height: 1.8;
+}
+
+.error-text {
+  color: var(--prompt);
+  display: block;
+  margin: 1rem 0;
+}
+
+.error-code {
+  color: var(--text-muted);
+  display: block;
+  font-style: italic;
+}
+
+.error-content {
+  text-align: left;
+}
+
+.error-title {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.error-description {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: 2rem;
+  line-height: 1.7;
+}
+
+.error-suggestions,
+.error-recent-posts {
+  margin-bottom: 2.5rem;
+}
+
+.error-suggestions h2,
+.error-recent-posts h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+
+.suggestion-list,
+.recent-posts-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.suggestion-list li,
+.recent-posts-list li {
+  margin-bottom: 1rem;
+}
+
+.suggestion-link,
+.post-link {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-secondary);
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  flex-wrap: wrap;
+}
+
+.suggestion-link:hover,
+.post-link:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.suggestion-link .prompt,
+.post-link .prompt {
+  color: var(--prompt);
+  flex-shrink: 0;
+}
+
+.suggestion-link .command {
+  color: var(--command);
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.suggestion-link .description {
+  color: var(--text-muted);
+  margin-left: auto;
+}
+
+.post-link .post-title {
+  color: var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .error-title {
+    font-size: 2rem;
+  }
+
+  .error-terminal .terminal-body {
+    font-size: 0.85rem;
+  }
+
+  .suggestion-link .description {
+    margin-left: 0;
+    width: 100%;
+    padding-left: 2rem;
+    font-size: 0.9rem;
+  }
+}
+</style>

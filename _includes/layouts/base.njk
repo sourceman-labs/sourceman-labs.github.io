@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if title %}{{ title }} | {% endif %}sourceman</title>
+  <meta name="description" content="{{ description or 'A programming blog about code, development, and technology' }}">
+
+  {%- if canonicalUrl %}
+  <link rel="canonical" href="{{ canonicalUrl }}">
+  {%- endif %}
+
+  {# Preload critical fonts #}
+  <link rel="preload" href="/static/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+
+  {# Main stylesheet #}
+  <link rel="stylesheet" href="/static/css/main.css">
+
+  {# Syntax highlighting stylesheet #}
+  <link rel="stylesheet" href="/static/css/syntax.css">
+
+  {# Meta tags for social sharing #}
+  <meta property="og:title" content="{{ title or 'sourceman' }}">
+  <meta property="og:description" content="{{ description or 'A programming blog about code, development, and technology' }}">
+  <meta property="og:type" content="{{ ogType or 'website' }}">
+  {%- if canonicalUrl %}
+  <meta property="og:url" content="{{ canonicalUrl }}">
+  {%- endif %}
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="{{ title or 'sourceman' }}">
+  <meta name="twitter:description" content="{{ description or 'A programming blog about code, development, and technology' }}">
+
+  {# Favicon #}
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▸</text></svg>">
+</head>
+<body>
+  <div class="container">
+    <header class="site-header">
+      <div class="logo">
+        <a href="/" class="logo-link">
+          <div class="terminal-window">
+            <div class="terminal-header">
+              <span class="terminal-dot"></span>
+              <span class="terminal-dot"></span>
+              <span class="terminal-dot"></span>
+            </div>
+            <div class="terminal-body">
+              <span class="prompt">&gt;_</span>
+              <span class="command">sourceman</span>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <nav class="site-nav">
+        <a href="/" class="nav-link">home</a>
+        <a href="/blog/" class="nav-link">blog</a>
+        <a href="/about/" class="nav-link">about</a>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+          <span class="theme-icon">◐</span>
+        </button>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      {{ content | safe }}
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; <span id="current-year"></span> Magnus Källman. All rights reserved.</p>
+      <p class="footer-links">
+        <a href="https://github.com/sourceman-labs" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <span class="separator">•</span>
+        <a href="/rss.xml">RSS</a>
+      </p>
+    </footer>
+  </div>
+
+  {# Set current year #}
+  <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+
+  {# Theme toggle script (minimal JS) #}
+  <script src="/static/js/theme-toggle.js"></script>
+</body>
+</html>
