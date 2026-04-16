@@ -1,0 +1,64 @@
+@page "/projects"
+@attribute [RenderStatic]
+@inject MarkdownProjects Projects
+@{
+    ViewData["Title"] = "Projects";
+    ViewData["Description"] = "Open source projects from sourceman labs";
+    Layout = "_Layout";
+
+    var projects = Projects.GetProjects();
+}
+
+<div class="projects-page content-narrow">
+    <section class="page-header">
+        <h1>Projects</h1>
+        <p class="page-description">
+            Open source tools and experiments.
+        </p>
+    </section>
+
+    @if (projects.Any())
+    {
+        <div class="posts-list">
+            @foreach (var project in projects)
+            {
+                <article class="post-card">
+                    <h2 class="post-card-title">
+                        <a href="@Projects.GetProjectLink(project)" class="post-card-link">
+                            @project.Title
+                        </a>
+                    </h2>
+
+                    @if (!string.IsNullOrEmpty(project.Summary))
+                    {
+                        <p class="post-card-excerpt">@project.Summary</p>
+                    }
+
+                    <div class="post-card-meta">
+                        @if (!string.IsNullOrEmpty(project.Url))
+                        {
+                            <a href="@project.Url" target="_blank" rel="noopener noreferrer" class="project-github-link">GitHub</a>
+                        }
+
+                        @if (project.Tags.Any())
+                        {
+                            <span class="separator">•</span>
+                            <span class="post-card-tags">
+                                @foreach (var tag in project.Tags)
+                                {
+                                    <span class="tag">#@tag</span>
+                                }
+                            </span>
+                        }
+                    </div>
+                </article>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="no-posts">
+            <p>No projects yet. Check back soon!</p>
+        </div>
+    }
+</div>

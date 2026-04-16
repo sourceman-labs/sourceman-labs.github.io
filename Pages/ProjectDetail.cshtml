@@ -1,0 +1,62 @@
+@page "/projects/{slug}"
+@attribute [RenderStatic]
+@model ProjectDetailModel
+@inject MarkdownProjects Projects
+@{
+    var project = Projects.FindProjectBySlug(Model.Slug!);
+
+    if (project == null)
+    {
+        Response.StatusCode = 404;
+        return;
+    }
+
+    ViewData["Title"] = project.Title;
+    ViewData["Description"] = project.Summary ?? project.Title;
+    ViewData["CanonicalUrl"] = $"https://sourceman.se{Projects.GetProjectLink(project)}";
+    Layout = "_Layout";
+}
+
+<article class="project-detail content-narrow">
+    <header class="post-header">
+        <h1 class="post-title">@project.Title</h1>
+
+        @if (!string.IsNullOrEmpty(project.Url))
+        {
+            <p class="project-repo-link">
+                <a href="@project.Url" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+            </p>
+        }
+
+        @if (project.Tags.Any())
+        {
+            <div class="post-tags">
+                @foreach (var tag in project.Tags)
+                {
+                    <span class="tag">#@tag</span>
+                }
+            </div>
+        }
+    </header>
+
+    @if (!string.IsNullOrEmpty(project.Summary))
+    {
+        <div class="post-excerpt">
+            <p>@project.Summary</p>
+        </div>
+    }
+
+    <div class="post-content">
+        @Html.Raw(project.Preview)
+    </div>
+</article>
+
+@implements IRenderStatic<ProjectDetailModel>
+
+@functions {
+    public List<ProjectDetailModel> GetStaticProps(RenderContext ctx)
+    {
+        var projects = ctx.Resolve<MarkdownProjects>();
+        return projects.GetProjects().Map(doc => new ProjectDetailModel { Slug = doc.Slug });
+    }
+}

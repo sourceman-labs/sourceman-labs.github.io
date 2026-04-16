@@ -1,201 +1,449 @@
 # sourceman Blog
 
-A static blog generator for [sourceman.se](https://sourceman.se) built with Eleventy and local markdown files.
+A static blog generator for [www.sourceman.se](https://www.sourceman.se) built with .NET Razor SSG and local markdown files.
 
 ## 🏗️ Architecture Overview
 
 This repository uses the **single-repo GitHub Pages pattern** with a git-based workflow:
 - **Repository name**: `sourceman-labs.github.io` (required for GitHub Pages)
-- **Content**: Markdown files in `posts/` directory (version controlled)
+- **Content**: Markdown files in `_posts/` directory (version controlled)
 - **Deployment**: GitHub Actions builds and deploys on push to main
 - **Zero cost**: Everything runs on GitHub's free tier
 
 ```
-Markdown files in posts/ directory
+Markdown files in _posts/ directory
     ↓ commit & push
 GitHub Actions workflow (triggered on push)
-    ↓ builds with Eleventy
+    ↓ builds with .NET Razor SSG
 Static HTML/CSS/JS
     ↓ deploys
-GitHub Pages → sourceman.se
+GitHub Pages → www.sourceman.se
 ```
 
 **⚠️ Important**: If you cloned this as `site-generator`, rename it to `sourceman-labs.github.io` for GitHub Pages to work correctly.
 
 ## Features
 
-- ⚡ **Lightning Fast**: Static site generation with Eleventy
+- ⚡ **Lightning Fast**: Static site generation with .NET Razor SSG
 - 🎨 **Terminal-Inspired Design**: Catppuccin Mocha theme with custom black background
 - 🌓 **Dark/Light Mode**: Automatic OS detection + manual toggle
 - 📝 **Git-Based Content**: Write posts in markdown, version controlled
 - 🎯 **Syntax Highlighting**: Pre-rendered code blocks (zero runtime JS)
 - 🚀 **Zero-Cost Hosting**: Deployed to GitHub Pages
 - 🔄 **PR Workflow**: Review posts before publishing
-- 📦 **TypeScript**: Type-safe configuration and data fetching
+- 🔒 **Type Safety**: C# compile-time checking for all code
 - ♿ **Lightweight**: <14KB per page (excluding first-load fonts)
+- 📦 **No npm Dependencies**: Uses .NET native tooling
 
 ## Prerequisites
 
-- **Node.js 22+** (with experimental TypeScript support)
-- **pnpm** (for dependency management)
+- **.NET SDK 10.0+** (LTS, released November 2025, supported until November 2028)
+  - Download from https://dotnet.microsoft.com/download
+- **Git** (for version control)
 - **GitHub account** (for GitHub Pages deployment)
-
-## 📖 Documentation
-
-- **[Local Development Guide](docs/DEVELOPMENT.md)** - Complete guide for setting up and running the blog locally
-- **[Cloudflare Dual-Domain Setup](docs/CLOUDFLARE.md)** - Configure sourceman.se and magnuskallman.se with redirect
-- **[Security Guidelines](SECURITY.md)** - Best practices for managing secrets and tokens
+- **(Optional) dotnet-serve** - For previewing prerendered static sites
+  ```bash
+  dotnet tool install --global dotnet-serve
+  ```
 
 ## Quick Start
 
-### 1. Repository Setup
+### 1. Install .NET SDK
 
-**Option A: Create new repository (recommended)**
+Download and install .NET SDK 10.0 or later:
 ```bash
-# Create a new repository on GitHub named: sourceman-labs.github.io
-# Then clone it:
+# Verify installation
+dotnet --version
+# Should output: 10.0.x or higher
+```
+
+### 2. Clone Repository
+
+```bash
 git clone https://github.com/sourceman-labs/sourceman-labs.github.io.git
 cd sourceman-labs.github.io
-
-# Copy all files from this project into the cloned repository
 ```
 
-**Option B: Rename existing repository**
-```bash
-# If you already cloned this repo:
-# 1. Go to GitHub → Repository Settings → General
-# 2. Rename repository to: sourceman-labs.github.io
-# 3. Update your local remote:
-git remote set-url origin https://github.com/sourceman-labs/sourceman-labs.github.io.git
-```
-
-**Why this naming matters**: GitHub Pages requires organization repos to be named `{org-name}.github.io` for the main site.
-
-### 2. Install Dependencies
+### 3. Restore Dependencies
 
 ```bash
-pnpm install
+dotnet restore
 ```
-
-### 3. (Optional) Add Font Files
-
-Download JetBrains Mono font and add to `static/fonts/`:
-
-```bash
-# Download from: https://www.jetbrains.com/lp/mono/
-# Copy JetBrainsMono-Regular.woff2 to:
-cp /path/to/JetBrainsMono-Regular.woff2 static/fonts/jetbrains-mono.woff2
-```
-
-See `static/fonts/README.md` for more options.
 
 ### 4. Run Development Server
 
 ```bash
-pnpm run dev
+dotnet run
 ```
 
-Visit `http://localhost:8080` to see your blog!
+Visit `http://localhost:5000` to see your blog!
 
 The dev server will:
-- Watch for changes to markdown posts in `posts/`
+- Watch for changes to markdown posts in `_posts/`
 - Hot reload on file changes
 - Automatically rebuild when posts are added or edited
 
-**For detailed local development instructions, see [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md)**
-
 ## Creating Blog Posts
 
-### Quick Start
+The blog uses a **git-based workflow** - write posts in markdown, commit to a branch, preview, then merge to publish. No CMS, no external dependencies.
 
-1. Create a new markdown file in `posts/` directory:
-   ```bash
-   touch posts/2024-12-15-my-awesome-post.md
-   ```
+### Quick Workflow
 
-2. Add frontmatter and content:
-   ```yaml
-   ---
-   title: "My Awesome Post"
-   publishedDate: "2024-12-15"
-   excerpt: "A brief summary"
-   tags: ["javascript", "tutorial"]
-   ---
-
-   # My Post Content
-
-   Start writing here...
-   ```
-
-3. Preview locally:
-   ```bash
-   pnpm run dev
-   # Visit http://localhost:8080
-   ```
-
-4. Commit and push to deploy!
-
-For detailed instructions, see [posts/README.md](posts/README.md).
-
-### Git-Based Workflow
-
-This blog uses a git-based publishing workflow:
-
-1. **Create branch** for new post
-2. **Write post** in markdown
-3. **Preview locally** with `pnpm run dev`
+1. **Create date-prefixed markdown file** in `/_posts` directory
+2. **Add frontmatter** (YAML metadata) and content
+3. **Preview locally** with `dotnet run`
 4. **Create PR** to main branch
-5. **Review** generated HTML
-6. **Merge PR** → auto-deploys to GitHub Pages!
+5. **Merge PR** → auto-deploys to GitHub Pages!
 
-No CMS, no webhooks, no external dependencies. Just markdown files in git.
+---
 
-## Available Scripts
+### Detailed Workflow
 
-| Script | Description |
-|--------|-------------|
-| `pnpm run dev` | Start development server with hot reload |
-| `pnpm run build` | Build production site to `_site/` |
-| `pnpm run preview` | Preview production build locally |
-| `pnpm run clean` | Remove build artifacts |
-| `pnpm run type-check` | Check TypeScript types without building |
+#### 1. Create a New Post Branch
+
+```bash
+git checkout -b post/my-awesome-article
+```
+
+#### 2. Create Markdown File
+
+**Important**: Use date-prefix format: `YYYY-MM-DD-slug.md`
+
+```bash
+touch _posts/2025-12-27-my-awesome-article.md
+```
+
+**Why date prefix?**
+- Ensures chronological sorting
+- Makes filenames unique
+- Follows Jekyll/Razor SSG convention
+
+#### 3. Write Post with Frontmatter
+
+Open the file and add frontmatter (YAML metadata) followed by markdown content:
+
+```markdown
+---
+title: "My Awesome Article: A Deep Dive"
+publishedDate: "2025-12-27"
+excerpt: "Exploring awesome things in depth. Learn how to build amazing stuff with .NET and C#."
+author: "Magnus Källman"
+tags: ["dotnet", "csharp", "tutorial"]
+---
+
+# Introduction
+
+Start writing your post here...
+
+## Section 1
+
+More content...
+
+\`\`\`csharp
+// Code examples with syntax highlighting
+public class Example
+{
+    public void DoSomething() => Console.WriteLine("Hello!");
+}
+\`\`\`
+
+## Conclusion
+
+Wrap up your thoughts...
+```
+
+#### 4. Frontmatter Fields Reference
+
+| Field | Required | Type | Description |
+|-------|----------|------|-------------|
+| `title` | ✅ Yes | string | Post title (displayed in header, meta tags) |
+| `publishedDate` | ✅ Yes | string | Publication date (YYYY-MM-DD or ISO 8601) |
+| `excerpt` | Recommended | string | Short summary (shown on home page, SEO) |
+| `author` | No | string | Author name (defaults to "Magnus Källman") |
+| `tags` | No | array | List of tags: `["tag1", "tag2"]` |
+| `readingTime` | No | number | Minutes to read (auto-calculated if omitted) |
+| `draft` | No | boolean | Set `true` to hide in production builds |
+| `updatedDate` | No | string | Last update date (shows "Updated" notice) |
+
+**Example frontmatter:**
+
+```yaml
+---
+title: "Building a Static Blog with Razor SSG"
+publishedDate: "2025-12-27"
+updatedDate: "2025-12-28"  # Optional: shows update notice
+excerpt: "Learn how to create a fast, type-safe blog using .NET and Razor Pages"
+author: "Magnus Källman"
+tags: ["dotnet", "razor", "ssg", "blogging"]
+draft: false  # Set to true to hide from production
+readingTime: 8  # Optional: override auto-calculation
+---
+```
+
+#### 5. Preview Locally
+
+**Option A: Development server (live reload)**
+
+```bash
+dotnet run
+# Visit http://localhost:5000
+# Changes to markdown files auto-reload
+```
+
+**Option B: Static preview (production-like)**
+
+```bash
+# Prerender to /dist folder
+dotnet run --AppTasks=prerender
+
+# Serve static files
+dotnet serve -d dist -p 8080
+# Visit http://localhost:8080
+```
+
+#### 6. Commit and Push
+
+```bash
+# Add your new post
+git add _posts/2025-12-27-my-awesome-article.md
+
+# Commit with descriptive message
+git commit -m "Add post: My Awesome Article"
+
+# Push to GitHub
+git push origin post/my-awesome-article
+```
+
+#### 7. Create Pull Request
+
+1. Go to **GitHub repository**: https://github.com/sourceman-labs/sourceman-labs.github.io
+2. Click **"Compare & pull request"** (appears after push)
+3. **Review changes**:
+   - Check markdown renders correctly
+   - Verify frontmatter
+   - Review diff
+4. Click **"Create pull request"**
+5. Add description (optional)
+
+#### 8. Merge and Deploy
+
+1. **Review the PR** (optional: ask for feedback)
+2. Click **"Merge pull request"**
+3. **GitHub Actions automatically**:
+   - Installs .NET 10
+   - Runs `dotnet restore`
+   - Executes `dotnet run --AppTasks=prerender`
+   - Deploys `/dist` to GitHub Pages
+4. **Live in 1-2 minutes** at https://www.sourceman.se
+
+---
+
+### Post Creation Tips
+
+**File Naming:**
+- ✅ Good: `2025-12-27-understanding-async-await.md`
+- ❌ Bad: `understanding-async-await.md` (missing date)
+- ❌ Bad: `2025-1-27-post.md` (use two-digit months: `01`, not `1`)
+
+**Slug Extraction:**
+- Filename: `2025-12-27-my-awesome-post.md`
+- Slug becomes: `my-awesome-post`
+- URL: `https://www.sourceman.se/blog/my-awesome-post/`
+
+**Draft Posts:**
+```yaml
+---
+title: "Work in Progress"
+draft: true  # Hidden in production, visible in development
+---
+```
+
+**Future Posts:**
+```yaml
+---
+title: "Scheduled for Tomorrow"
+publishedDate: "2025-12-28"  # Won't show until this date
+---
+```
+
+**Updated Posts:**
+```yaml
+---
+title: "Updated Article"
+publishedDate: "2025-12-15"
+updatedDate: "2025-12-27"  # Shows "Updated on..." notice
+---
+```
+
+**Code Blocks:**
+- Use triple backticks with language: \`\`\`csharp
+- Syntax highlighting auto-applied
+- Supported: csharp, javascript, bash, yaml, json, etc.
+
+**Images:**
+```markdown
+![Alt text](/images/my-image.png)
+```
+Place images in `/wwwroot/images/` and reference as `/images/filename.png`
+
+---
+
+### Editing Existing Posts
+
+```bash
+# Create branch
+git checkout -b edit/fix-typo-in-awesome-article
+
+# Edit post
+vim _posts/2025-12-27-my-awesome-article.md
+
+# Update frontmatter with updatedDate
+# (shows "Updated on..." notice to readers)
+
+# Commit, push, PR, merge (same as above)
+```
+
+---
+
+### Deleting Posts
+
+```bash
+# Create branch
+git checkout -b delete/old-post
+
+# Delete post file
+git rm _posts/2024-01-01-old-post.md
+
+# Commit and push
+git commit -m "Remove outdated post"
+git push origin delete/old-post
+
+# Create PR and merge
+```
+
+## Available Commands
+
+| Command | Description |
+|---------|-------------|
+| `dotnet run` | Start development server (live reload at http://localhost:5000) |
+| `dotnet run --AppTasks=prerender` | Prerender static site to `/dist` directory |
+| `dotnet serve -d dist -p 8080` | Serve static `/dist` folder (after prerender) |
+| `dotnet clean` | Remove build artifacts and `/dist` folder |
+| `dotnet restore` | Restore NuGet package dependencies |
+| `dotnet build` | Compile the project |
+
+## Browser Automation with Playwright MCP
+
+This project is configured with the [Microsoft Playwright MCP server](https://github.com/microsoft/playwright-mcp) for AI-driven browser automation via Claude Code. It uses the browser's accessibility tree (not screenshots) for token-efficient, structured page inspection.
+
+### Setup
+
+The Playwright MCP server is registered in the local Claude Code config. To verify:
+
+```bash
+claude mcp list
+# Should show: playwright (stdio) npx -y @playwright/mcp
+```
+
+If missing, add it:
+
+```bash
+claude mcp add --transport stdio playwright -- npx -y @playwright/mcp
+```
+
+No project dependencies are added — the MCP server runs out-of-process via `npx` and downloads its own Chromium on first use.
+
+### Usage
+
+Start the site locally, then use Claude Code to drive the browser:
+
+**Option A: Dev server (simplest)**
+
+```bash
+dotnet run
+# Site available at http://localhost:5000
+```
+
+**Option B: Static preview (production-like)**
+
+```bash
+# Prerender to static files (this is a build command, not a server)
+dotnet run --AppTasks=prerender
+
+# Serve the static output
+dotnet serve -d dist -p 8080
+# Site available at http://localhost:8080
+```
+
+Option A is the quickest way to get started. Option B tests the exact static output that gets deployed to GitHub Pages.
+
+In Claude Code, ask things like:
+
+- "Navigate to localhost:5000 and describe what you see"
+- "Check all pages for broken links"
+- "Audit the accessibility of the homepage"
+- "Toggle dark mode and verify both themes render correctly"
+- "Measure the page weight of the blog listing page"
+
+### What You Can Do
+
+| Task | How It Works |
+|------|-------------|
+| **Link validation** | Crawl all pages in `/dist/`, follow internal links, report 404s |
+| **Accessibility auditing** | Inspect heading hierarchy, ARIA labels, alt text via the a11y tree |
+| **Content verification** | After adding posts/projects, verify they appear on listing pages |
+| **Dark/light mode testing** | Execute JS to toggle theme, then snapshot both modes |
+| **Page weight checking** | Use `browser_execute_javascript` to measure DOM size and transfer bytes |
+| **Layout verification** | Check navigation, footer, and responsive structure after CSS changes |
+
+### Available Playwright MCP Tools
+
+Once connected, Claude Code has access to these tools:
+
+- `browser_navigate` — go to a URL
+- `browser_snapshot` — get an accessibility tree snapshot of the current page
+- `browser_click` — click an element
+- `browser_fill` — fill a form field
+- `browser_execute_javascript` — run JS in the page context
+- `browser_screenshot` — capture a screenshot
+
+### Notes
+
+- The MCP server downloads Chromium on first use, so the initial run takes a moment
+- No `Microsoft.Playwright` NuGet package is needed — this is not a C# test framework setup
+- No test project or xUnit infrastructure is required — the MCP approach is interactive
+- For CI-based automated testing, a separate test harness would be needed
 
 ## Project Structure
 
 ```
 site-generator/
 ├── .github/workflows/       # GitHub Actions CI/CD
-│   └── deploy.yml          # Deployment workflow
-├── _data/                  # Eleventy data files
-│   └── posts.ts            # Markdown posts loader
-├── _includes/              # Templates
-│   └── layouts/
-│       ├── base.njk        # Base layout with logo
-│       └── post.njk        # Blog post layout
-├── docs/                   # Documentation
-│   ├── DEVELOPMENT.md      # Local development guide
-│   └── CLOUDFLARE.md       # Domain setup guide
-├── posts/                  # Blog posts (markdown files)
-│   ├── README.md           # Post creation guide
-│   └── *.md                # Individual blog posts
-├── src/utils/              # TypeScript utilities
-│   └── secrets.ts          # Environment variable utilities
-├── static/                 # Static assets
+│   └── build.yml           # Deployment workflow (.NET 10)
+├── _posts/                 # 📝 Blog posts (markdown with date prefix)
+│   ├── 2024-12-15-welcome.md
+│   └── 2025-12-27-example.md
+├── Pages/                  # Razor Pages templates
+│   ├── Shared/
+│   │   └── _Layout.cshtml  # Base layout
+│   ├── Index.cshtml        # Home page
+│   ├── Blog.cshtml         # All posts listing
+│   └── BlogPost.cshtml     # Individual post renderer
+├── wwwroot/                # Static assets (copied to /dist)
 │   ├── css/
 │   │   ├── main.css        # Main stylesheet (Catppuccin theme)
 │   │   └── syntax.css      # Syntax highlighting styles
 │   ├── js/
 │   │   └── theme-toggle.js # Dark/light mode toggle (<1KB)
 │   └── fonts/
-│       └── jetbrains-mono.woff2  # Font file (optional)
-├── types/                  # TypeScript type definitions
-│   └── blog.d.ts           # Blog post types
-├── .env.example            # Environment variables template
-├── .gitignore              # Git ignore rules
-├── eleventy.config.ts      # Eleventy configuration
-├── index.njk               # Home page
-├── package.json            # Dependencies and scripts
-├── tsconfig.json           # TypeScript configuration
+│       └── jetbrains-mono.woff2  # Font file
+├── dist/                   # 📦 Generated output (deployed to GitHub Pages)
+├── Configure.Ssg.cs        # Razor SSG configuration
+├── Markdown.Blog.cs        # Blog post loader service
+├── MarkdownPagesBase.cs    # Base markdown functionality
+├── Program.cs              # ASP.NET Core bootstrapper
+├── CNAME                   # Custom domain configuration
+├── CNAME                   # Custom domain (www.sourceman.se)
 └── README.md               # This file
 ```
 
@@ -215,30 +463,22 @@ site-generator/
    ```
 
 The GitHub Actions workflow will automatically:
-- Install dependencies
-- Build the site with Eleventy
-- Deploy to GitHub Pages
+- Install .NET 10 SDK
+- Run `dotnet restore`
+- Execute `dotnet run --AppTasks=prerender`
+- Deploy `/dist` folder to GitHub Pages
 
 **Note:** No secrets needed! Posts are in the repository, no external API calls.
 
 ### Custom Domain Setup
 
 **CNAME File** (already configured):
-The repository includes a `CNAME` file with `sourceman.se` as the primary domain.
+The repository includes a `CNAME` file in `/wwwroot` with `www.sourceman.se` as the custom domain.
 
-**Dual-Domain Configuration**:
-This blog is configured to work with two domains:
-- **sourceman.se** (primary) - Main blog URL
-- **magnuskallman.se** (secondary) - Redirects to sourceman.se
-
-For complete DNS and Cloudflare configuration instructions, see:
-- **[Cloudflare Dual-Domain Setup Guide](docs/CLOUDFLARE.md)**
-
-**Quick Summary**:
-1. Both domains point to GitHub Pages via Cloudflare DNS (A records)
-2. Cloudflare Page Rule redirects magnuskallman.se → sourceman.se (301)
-3. SSL/TLS configured on both domains
-4. Fast edge-level redirects with path preservation
+**DNS Configuration**:
+- **www.sourceman.se** (primary) — CNAME record pointing to `sourceman-labs.github.io`
+- **sourceman.se** (apex) — redirects to `www.sourceman.se` (configured via Cloudflare)
+- Apex domain kept free for future subdomains (e.g. `api.sourceman.se`)
 
 ## Security
 
@@ -248,16 +488,17 @@ This blog uses a simple, secure architecture:
 - ✅ **No external API calls**: Everything is built at compile time
 - ✅ **Static output only**: The deployed site contains only HTML/CSS/JS
 - ✅ **Version controlled**: All content is tracked in git
+- ✅ **Type safety**: C# compile-time checking prevents runtime errors
 
 **Security Flow:**
 ```
 Markdown files in repository
     ↓ (committed to git)
 GitHub Actions builds site
-    ↓ (converts markdown to HTML)
+    ↓ (converts markdown to HTML using .NET)
 Static HTML/CSS/JS deployed
     ↓ (no secrets, no API calls)
-Public website (sourceman.se)
+Public website (www.sourceman.se)
 ```
 
 See [SECURITY.md](SECURITY.md) for detailed security guidelines.
@@ -266,23 +507,23 @@ See [SECURITY.md](SECURITY.md) for detailed security guidelines.
 
 ### Repository Setup Checklist
 - [ ] Repository named: `sourceman-labs.github.io`
+- [ ] .NET SDK 10.0+ installed
 - [ ] GitHub Pages enabled (Settings → Pages → Source: GitHub Actions)
-- [ ] CNAME file created with custom domain
+- [ ] CNAME file created in `wwwroot/` with custom domain
 - [ ] DNS configured for custom domain
-- [ ] Example post created in `posts/` directory
+- [ ] Example post created in `_posts/` directory
 
 ### Common Commands
 ```bash
-pnpm run dev         # Local development with hot reload
-pnpm run build       # Production build
-pnpm run preview     # Preview production build locally
-pnpm run clean       # Clean build artifacts
-pnpm run type-check  # TypeScript type checking
+dotnet run                       # Local development with hot reload
+dotnet run --AppTasks=prerender  # Production build to /dist
+dotnet clean                     # Clean build artifacts
+dotnet restore                   # Restore dependencies
 ```
 
 ### URLs to Know
 - **GitHub Pages**: https://sourceman-labs.github.io
-- **Custom Domain**: https://sourceman.se
+- **Custom Domain**: https://www.sourceman.se
 - **GitHub Actions**: https://github.com/sourceman-labs/sourceman-labs.github.io/actions
 - **GitHub Settings**: https://github.com/sourceman-labs/sourceman-labs.github.io/settings
 
@@ -290,7 +531,7 @@ pnpm run type-check  # TypeScript type checking
 
 ### Changing Theme Colors
 
-Edit CSS variables in `static/css/main.css`:
+Edit CSS variables in `wwwroot/css/main.css`:
 
 ```css
 :root {
@@ -305,19 +546,19 @@ Edit CSS variables in `static/css/main.css`:
 
 If you want to add new frontmatter fields:
 
-1. Update types in `types/blog.d.ts`
-2. Update data fetcher in `_data/posts.ts` to read the new fields
-3. Update templates to display the new fields
+1. Update the `BlogPost` class in `Configure.Ssg.cs`
+2. Update templates in `Pages/` to display the new fields
 
 ### Adding Pages
 
-Create new `.njk` files in the root directory:
+Create new `.cshtml` files in the `Pages/` directory:
 
-```njk
----
-layout: layouts/base.njk
-title: About
----
+```cshtml
+@page "/about"
+@{
+    ViewData["Title"] = "About";
+    Layout = "_Layout";
+}
 
 <div class="page-content">
   <h1>About</h1>
@@ -329,33 +570,48 @@ title: About
 
 ### Posts not showing
 
-- Check that markdown files exist in `posts/` directory
+- Check that markdown files exist in `_posts/` directory with date prefix format
 - Verify frontmatter is valid YAML
 - Ensure posts are not marked as `draft: true` (in production)
 - Check console output for parsing errors
+- Run `dotnet run` and check logs
 
 ### Build fails in GitHub Actions
 
 - Review Actions logs for specific errors
-- Verify `pnpm-lock.yaml` is committed
+- Verify all `.cs` files compile locally with `dotnet build`
 - Check that markdown syntax is valid
+- Ensure all dependencies are in `.csproj` file
 
-### TypeScript errors
+### Prerender fails
 
-- Run `pnpm run type-check` to see detailed errors
-- Verify imports match the new `types/blog.d.ts` structure
+- Check that `/wwwroot` directory exists
+- Verify layout files exist in `Pages/Shared/_Layout.cshtml`
+- Run `dotnet build` first to check for compilation errors
+- Check logs for specific error messages
 
 ### Fonts not loading
 
-- Ensure `jetbrains-mono.woff2` exists in `static/fonts/`
+- Ensure `jetbrains-mono.woff2` exists in `wwwroot/fonts/`
 - Check browser console for 404 errors
 - Verify font path in CSS matches file location
+- Ensure fonts are copied to `/dist` during prerender
 
 ## Performance
 
 - **First Load**: ~25-35KB (HTML + CSS + fonts)
 - **Subsequent Pages**: <14KB (HTML + CSS only, fonts cached)
-- **Lighthouse Score**: 100/100 (Performance, Accessibility, Best Practices, SEO)
+- **Build Time**: ~2-5 seconds for small blogs (<50 posts)
+- **Lighthouse Score**: 95-100 (Performance, Accessibility, Best Practices, SEO)
+
+## Tech Stack
+
+- **.NET 10** - LTS framework (supported until November 2028)
+- **Razor Pages** - Templating engine
+- **ServiceStack Razor SSG** - Static site generation
+- **Markdig** - Markdown processing with CommonMark and GFM support
+- **GitHub Actions** - CI/CD
+- **GitHub Pages** - Hosting
 
 ## Contributing
 
@@ -372,4 +628,4 @@ MIT License - See LICENSE file for details
 
 Magnus Källman
 - GitHub: [@sourceman-labs](https://github.com/sourceman-labs)
-- Website: [sourceman.se](https://sourceman.se)
+- Website: [www.sourceman.se](https://www.sourceman.se)

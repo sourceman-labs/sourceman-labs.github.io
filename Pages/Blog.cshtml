@@ -1,0 +1,77 @@
+@page "/blog"
+@attribute [RenderStatic]
+@inject MarkdownBlog Blog
+@{
+    ViewData["Title"] = "Blog";
+    ViewData["Description"] = "All blog posts about code, development, and open source";
+    Layout = "_Layout";
+
+    var posts = Blog.GetPosts();
+}
+
+<div class="blog-page content-narrow">
+    <section class="page-header">
+        <h1>All Posts</h1>
+        <p class="page-description">
+            Thoughts on programming, tools, and building software.
+        </p>
+    </section>
+
+    @if (posts.Any())
+    {
+        <section class="posts-section">
+            <div class="posts-list">
+                @foreach (var post in posts)
+                {
+                    <article class="post-card">
+                        <h2 class="post-card-title">
+                            <a href="@Blog.GetPostLink(post)" class="post-card-link">
+                                @post.Title
+                            </a>
+                        </h2>
+
+                        @if (!string.IsNullOrEmpty(post.Summary))
+                        {
+                            <p class="post-card-excerpt">@post.Summary</p>
+                        }
+
+                        <div class="post-card-meta">
+                            <time datetime="@post.Date?.ToString("o")" class="post-card-date">
+                                @Blog.GetDateLabel(post.Date)
+                            </time>
+
+                            @if (post.ReadingTime > 0)
+                            {
+                                <span class="separator">•</span>
+                                <span class="post-card-reading-time">@post.ReadingTime min read</span>
+                            }
+
+                            @if (post.Author != null)
+                            {
+                                <span class="separator">•</span>
+                                <span class="post-card-author">@post.Author</span>
+                            }
+
+                            @if (post.Tags.Any())
+                            {
+                                <span class="separator">•</span>
+                                <span class="post-card-tags">
+                                    @foreach (var tag in post.Tags)
+                                    {
+                                        <span class="tag">#@tag</span>
+                                    }
+                                </span>
+                            }
+                        </div>
+                    </article>
+                }
+            </div>
+        </section>
+    }
+    else
+    {
+        <div class="no-posts">
+            <p>No posts yet. Check back soon!</p>
+        </div>
+    }
+</div>
