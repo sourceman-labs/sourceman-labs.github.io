@@ -1,12 +1,10 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
-using ServiceStack;
+using NUglify;
 using ServiceStack.IO;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
-builder.Services.AddServiceStack(typeof(SourcemanBlog.AppHost).Assembly);
+builder.Services.AddServiceStack(typeof(Sourceman.Web.AppHost).Assembly);
 
 var app = builder.Build();
 
@@ -20,7 +18,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-var appHost = new SourcemanBlog.AppHost();
+var appHost = new Sourceman.Web.AppHost();
 app.UseServiceStack(appHost);
 
 app.MapRazorPages();
@@ -55,6 +53,41 @@ if (args.Length > 0 && args[0] == "--AppTasks=prerender")
     {
         if (Path.GetFileName(file).Contains('{'))
             File.Delete(file);
+    }
+
+    // Minify CSS and JS files in dist
+    foreach (var cssFile in Directory.GetFiles(distDir, "*.css", SearchOption.AllDirectories))
+    {
+        var source = File.ReadAllText(cssFile);
+        var result = Uglify.Css(source);
+        if (result.HasErrors)
+        {
+            Console.WriteLine($"Warning: CSS minification errors in {cssFile}:");
+            foreach (var error in result.Errors)
+                Console.WriteLine($"  {error}");
+        }
+        else
+        {
+            File.WriteAllText(cssFile, result.Code);
+            Console.WriteLine($"Minified {Path.GetRelativePath(distDir, cssFile)} ({source.Length} -> {result.Code.Length} bytes)");
+        }
+    }
+
+    foreach (var jsFile in Directory.GetFiles(distDir, "*.js", SearchOption.AllDirectories))
+    {
+        var source = File.ReadAllText(jsFile);
+        var result = Uglify.Js(source);
+        if (result.HasErrors)
+        {
+            Console.WriteLine($"Warning: JS minification errors in {jsFile}:");
+            foreach (var error in result.Errors)
+                Console.WriteLine($"  {error}");
+        }
+        else
+        {
+            File.WriteAllText(jsFile, result.Code);
+            Console.WriteLine($"Minified {Path.GetRelativePath(distDir, jsFile)} ({source.Length} -> {result.Code.Length} bytes)");
+        }
     }
 
     Console.WriteLine("Prerender complete!");

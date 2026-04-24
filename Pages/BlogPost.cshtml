@@ -33,11 +33,6 @@
                 <span class="post-reading-time">@post.ReadingTime min read</span>
             }
 
-            @if (post.Author != null)
-            {
-                <span class="separator">•</span>
-                <span class="post-author">@post.Author</span>
-            }
         </div>
 
         @if (post.Tags.Any())
@@ -62,19 +57,12 @@
         @Html.Raw(post.Preview)
     </div>
 
-    @if (post.Date != null && post.Date.Value.AddDays(1) < DateTime.UtcNow)
-    {
-        <footer class="post-footer">
-            <p class="post-published">
-                Published: <time datetime="@post.Date?.ToString("o")">
-                    @Blog.GetDateLabel(post.Date)
-                </time>
-            </p>
-        </footer>
-    }
 </article>
 
-@implements IRenderStatic<BlogPostModel>
+@using ServiceStack
+@using ServiceStack.Mvc
+@using Sourceman.Web.Pages
+@implements ServiceStack.Mvc.IRenderStatic<Sourceman.Web.Pages.BlogPostModel>
 
 @functions {
     public List<BlogPostModel> GetStaticProps(RenderContext ctx)

@@ -1,4 +1,5 @@
 @page "/about"
+@using ServiceStack.Mvc
 @attribute [RenderStatic]
 @{
     ViewData["Title"] = "About";
@@ -7,11 +8,69 @@
 }
 
 <div class="about-page content-narrow">
-    <section class="page-header">
+    <section class="about-hero">
         <h1>About</h1>
+        <p>
+            Hi, I'm Magnus — a freelancing senior software engineer, cloud architect, and professional
+            problem solver. Working in software since 2012, mostly around the Microsoft
+            .NET stack and Azure.
+            I care deeply about my trade and the users of my software.
+        </p>
+        <br/>
+        <p>
+            I'm a nerd. When I'm not coding, I'm probably gardening, sport climbing,
+            reading a book, or fermenting something.
+        </p>
+        <br/>
+        <p>
+            I occasionally write about my side-projects and blog posts related to software engineering on this site. 
+        </p>
     </section>
 
-    <div class="about-content prose">
-        <p>Coming soon.</p>
+    <blockquote class="about-quote">
+        Software performance <em>is still</em> one of the most overlooked features.
+    </blockquote>
+
+    <div class="about-grid">
+        <p>Below is a selection from my career, where I have worked primarily with web technologies on the backend — building e-commerce platforms, bespoke web applications, APIs, data synchronization tools, and much more.</p>
+        <section class="about-column">
+            <h2 class="about-heading">Industries</h2>
+            <ul class="about-list">
+                <li>Retail</li>
+                <li>Food retail</li>
+                <li>Book &amp; publishing</li>
+                <li>Restaurant wholesale</li>
+                <li>EV charging infrastructure</li>
+            </ul>
+        </section>
+
+        <section class="about-column">
+            <h2 class="about-heading">Expertise</h2>
+            <ul class="about-list">
+                <li>Microsoft Azure</li>
+                <li>.NET</li>
+                <li>Go</li>
+                <li>Rust</li>
+                <li>Cloud architecture</li>
+                <li>Code performance reviews</li>
+                <li>Advanced troubleshooting — memory leaks, hot paths</li>
+                <li>Agentic development</li>
+                <li>Harness Engineering</li>
+            </ul>
+        </section>
     </div>
+
+    <section class="about-links">
+        <h2 class="about-heading">Where to find me</h2>
+        <ul class="link-list">
+            <li>
+                <a href="https://github.com/magkal" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <span class="link-handle">@@magkal</span>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/in/magnus-k%C3%A4llman-976167114/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <span class="link-handle">Magnus Källman</span>
+            </li>
+        </ul>
+    </section>
 </div>

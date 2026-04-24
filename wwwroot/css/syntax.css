@@ -1,139 +1,156 @@
-/* Syntax Highlighting Theme - Catppuccin Mocha */
-/* Pre-rendered by PrismJS plugin at build time */
+/* Syntax Highlighting — Kanagawa Dragon (dark) / Lotus (light) */
+/* Server-side highlighted by TextMateSharp at build time */
 
-.token.comment,
-.token.prolog,
-.token.doctype,
-.token.cdata {
-  color: #6c7086;
-  font-style: italic;
-}
+/* === Dark mode (default: Kanagawa Dragon) === */
 
-.token.punctuation {
-  color: #cdd6f4;
-}
+.keyword          { color: #8992a7; } /* dragonViolet */
+.controlKeyword   { color: #8992a7; } /* dragonViolet */
+.pseudoKeyword    { color: #8992a7; } /* dragonViolet */
 
-.token.namespace {
-  opacity: 0.7;
-}
+.string           { color: #8a9a7b; } /* dragonGreen2 */
+.stringCSharpVerbatim { color: #8a9a7b; }
+.stringEscape     { color: #9e9b93; } /* dragonGray2 */
 
-.token.property,
-.token.tag,
-.token.boolean,
-.token.number,
-.token.constant,
-.token.symbol,
-.token.deleted {
-  color: #fab387;
-}
+.comment          { color: #737c73; font-style: italic; } /* dragonAsh */
+.xmlDocComment    { color: #737c73; font-style: italic; }
+.xmlDocTag        { color: #9e9b93; } /* dragonGray2 */
 
-.token.selector,
-.token.attr-name,
-.token.string,
-.token.char,
-.token.builtin,
-.token.inserted {
-  color: #a6e3a1;
-}
+.number           { color: #a292a3; } /* dragonPink */
+.jsonNumber       { color: #a292a3; }
 
-.token.operator,
-.token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
-  color: #89dceb;
-}
+.className        { color: #8ba4b0; } /* dragonBlue2 */
+.type             { color: #8ea4a2; } /* dragonAqua */
+.typeVariable     { color: #8ea4a2; font-style: italic; }
+.namespace        { color: #8ea4a2; } /* dragonAqua */
 
-.token.atrule,
-.token.attr-value,
-.token.keyword {
-  color: #cba6f7;
-}
+.plainText        { color: #c5c9c5; } /* dragonWhite */
 
-.token.function,
-.token.class-name {
-  color: #89b4fa;
-}
+.htmlTagDelimiter { color: #9e9b93; } /* dragonGray2 */
+.htmlElementName  { color: #c4746e; } /* dragonRed */
+.htmlAttributeName { color: #c4b28a; } /* dragonYellow */
+.htmlAttributeValue { color: #8a9a7b; } /* dragonGreen2 */
+.htmlOperator     { color: #c4746e; } /* dragonRed */
+.htmlEntity       { color: #b6927b; } /* dragonOrange */
+.htmlComment      { color: #737c73; font-style: italic; }
+.htmlServerSideScript { color: #c4b28a; }
 
-.token.regex,
-.token.important,
-.token.variable {
-  color: #f9e2af;
-}
+.xmlDelimiter     { color: #9e9b93; }
+.xmlName          { color: #c4746e; }
+.xmlAttribute     { color: #c4b28a; }
+.xmlAttributeQuotes { color: #9e9b93; }
+.xmlAttributeValue { color: #8a9a7b; }
+.xmlCDataSection  { color: #9e9b93; }
+.xmlComment       { color: #737c73; font-style: italic; }
 
-.token.important,
-.token.bold {
-  font-weight: bold;
-}
+.jsonKey          { color: #8ba4b0; } /* dragonBlue2 */
+.jsonString       { color: #8a9a7b; } /* dragonGreen2 */
+.jsonConst        { color: #b6927b; } /* dragonOrange */
 
-.token.italic {
-  font-style: italic;
-}
+.cssSelector      { color: #c4746e; } /* dragonRed */
+.cssPropertyName  { color: #8ba4b0; } /* dragonBlue2 */
+.cssPropertyValue { color: #8a9a7b; } /* dragonGreen2 */
 
-.token.entity {
-  cursor: help;
-}
+.sqlSystemFunction { color: #a292a3; } /* dragonPink */
 
-/* Light theme overrides */
-[data-theme="light"] .token.comment,
-[data-theme="light"] .token.prolog,
-[data-theme="light"] .token.doctype,
-[data-theme="light"] .token.cdata {
-  color: #acb0be;
-}
+.powershellAttribute { color: #949fb5; } /* dragonTeal */
+.powershellOperator  { color: #c4746e; } /* dragonRed */
+.powershellType      { color: #8ea4a2; } /* dragonAqua */
+.powershellVariable  { color: #c4b28a; } /* dragonYellow */
+.powershellCommand   { color: #8ba4b0; } /* dragonBlue2 */
+.powershellParameter { color: #9e9b93; } /* dragonGray2 */
 
-[data-theme="light"] .token.punctuation {
-  color: #4c4f69;
-}
+.operator         { color: #c4746e; } /* dragonRed */
+.delimiter        { color: #9e9b93; } /* dragonGray2 */
 
-[data-theme="light"] .token.property,
-[data-theme="light"] .token.tag,
-[data-theme="light"] .token.boolean,
-[data-theme="light"] .token.number,
-[data-theme="light"] .token.constant,
-[data-theme="light"] .token.symbol,
-[data-theme="light"] .token.deleted {
-  color: #fe640b;
-}
+.preprocessorKeyword { color: #949fb5; } /* dragonTeal */
 
-[data-theme="light"] .token.selector,
-[data-theme="light"] .token.attr-name,
-[data-theme="light"] .token.string,
-[data-theme="light"] .token.char,
-[data-theme="light"] .token.builtin,
-[data-theme="light"] .token.inserted {
-  color: #40a02b;
-}
+.constructor      { color: #a292a3; } /* dragonPink */
+.predefined       { color: #8ba4b0; } /* dragonBlue2 */
+.method           { color: #7e9cd8; } /* dragonBlue */
 
-[data-theme="light"] .token.operator,
-[data-theme="light"] .token.entity,
-[data-theme="light"] .token.url,
-[data-theme="light"] .language-css .token.string,
-[data-theme="light"] .style .token.string {
-  color: #209fb5;
-}
+.attribute        { color: #8ea4a2; font-style: italic; } /* dragonAqua */
+.builtinFunction  { color: #8ba4b0; font-weight: bold; } /* dragonBlue2 */
+.builtinValue     { color: #b6927b; font-weight: bold; } /* dragonOrange */
+.specialChar      { color: #b6927b; } /* dragonOrange */
 
-[data-theme="light"] .token.atrule,
-[data-theme="light"] .token.attr-value,
-[data-theme="light"] .token.keyword {
-  color: #8839ef;
-}
+.markdownHeader   { color: #8ba4b0; font-weight: bold; }
+.markdownCode     { color: #8a9a7b; }
+.markdownListItem { font-weight: bold; }
 
-[data-theme="light"] .token.function,
-[data-theme="light"] .token.class-name {
-  color: #1e66f5;
-}
+.italic           { font-style: italic; }
+.bold             { font-weight: bold; }
 
-[data-theme="light"] .token.regex,
-[data-theme="light"] .token.important,
-[data-theme="light"] .token.variable {
-  color: #df8e1d;
-}
+/* === Light mode (Kanagawa Lotus) === */
 
-/* Line highlighting (if needed) */
-.line-highlight {
-  background: rgba(137, 180, 250, 0.1);
-  border-left: 3px solid #89b4fa;
-  padding-left: 1rem;
-  margin-left: -1rem;
-}
+[data-theme="light"] .keyword          { color: #624c83; } /* lotusViolet4 */
+[data-theme="light"] .controlKeyword   { color: #624c83; }
+[data-theme="light"] .pseudoKeyword    { color: #624c83; }
+
+[data-theme="light"] .string           { color: #6f894e; } /* lotusGreen */
+[data-theme="light"] .stringCSharpVerbatim { color: #6f894e; }
+[data-theme="light"] .stringEscape     { color: #8a8980; } /* lotusGray3 */
+
+[data-theme="light"] .comment          { color: #8a8980; font-style: italic; } /* lotusGray3 */
+[data-theme="light"] .xmlDocComment    { color: #8a8980; font-style: italic; }
+[data-theme="light"] .xmlDocTag        { color: #8a8980; }
+
+[data-theme="light"] .number           { color: #b35b79; } /* lotusPink */
+[data-theme="light"] .jsonNumber       { color: #b35b79; }
+
+[data-theme="light"] .className        { color: #4d699b; } /* lotusBlue4 */
+[data-theme="light"] .type             { color: #597b75; } /* lotusAqua */
+[data-theme="light"] .typeVariable     { color: #597b75; font-style: italic; }
+[data-theme="light"] .namespace        { color: #597b75; }
+
+[data-theme="light"] .plainText        { color: #545464; } /* lotusInk1 */
+
+[data-theme="light"] .htmlTagDelimiter { color: #4e8ca2; } /* lotusTeal1 */
+[data-theme="light"] .htmlElementName  { color: #c84053; } /* lotusRed */
+[data-theme="light"] .htmlAttributeName { color: #77713f; } /* lotusYellow */
+[data-theme="light"] .htmlAttributeValue { color: #6f894e; }
+[data-theme="light"] .htmlOperator     { color: #836f4a; } /* lotusYellow2 */
+[data-theme="light"] .htmlEntity       { color: #cc6d00; } /* lotusOrange */
+[data-theme="light"] .htmlComment      { color: #8a8980; font-style: italic; }
+[data-theme="light"] .htmlServerSideScript { color: #77713f; }
+
+[data-theme="light"] .xmlDelimiter     { color: #4e8ca2; }
+[data-theme="light"] .xmlName          { color: #c84053; }
+[data-theme="light"] .xmlAttribute     { color: #77713f; }
+[data-theme="light"] .xmlAttributeQuotes { color: #545464; }
+[data-theme="light"] .xmlAttributeValue { color: #6f894e; }
+[data-theme="light"] .xmlCDataSection  { color: #8a8980; }
+[data-theme="light"] .xmlComment       { color: #8a8980; font-style: italic; }
+
+[data-theme="light"] .jsonKey          { color: #4d699b; } /* lotusBlue4 */
+[data-theme="light"] .jsonString       { color: #6f894e; } /* lotusGreen */
+[data-theme="light"] .jsonConst        { color: #cc6d00; } /* lotusOrange */
+
+[data-theme="light"] .cssSelector      { color: #c84053; }
+[data-theme="light"] .cssPropertyName  { color: #4d699b; }
+[data-theme="light"] .cssPropertyValue { color: #6f894e; }
+
+[data-theme="light"] .sqlSystemFunction { color: #b35b79; }
+
+[data-theme="light"] .powershellAttribute { color: #6693bf; } /* lotusTeal2 */
+[data-theme="light"] .powershellOperator  { color: #836f4a; }
+[data-theme="light"] .powershellType      { color: #597b75; }
+[data-theme="light"] .powershellVariable  { color: #77713f; }
+[data-theme="light"] .powershellCommand   { color: #4d699b; }
+[data-theme="light"] .powershellParameter { color: #8a8980; }
+
+[data-theme="light"] .operator         { color: #836f4a; } /* lotusYellow2 */
+[data-theme="light"] .delimiter        { color: #4e8ca2; } /* lotusTeal1 */
+
+[data-theme="light"] .preprocessorKeyword { color: #6693bf; } /* lotusTeal2 */
+
+[data-theme="light"] .constructor      { color: #b35b79; }
+[data-theme="light"] .predefined       { color: #4d699b; }
+[data-theme="light"] .method           { color: #1f6fec; } /* lotusBlue */
+
+[data-theme="light"] .attribute        { color: #597b75; font-style: italic; }
+[data-theme="light"] .builtinFunction  { color: #4d699b; font-weight: bold; }
+[data-theme="light"] .builtinValue     { color: #cc6d00; font-weight: bold; }
+[data-theme="light"] .specialChar      { color: #cc6d00; }
+
+[data-theme="light"] .markdownHeader   { color: #4d699b; font-weight: bold; }
+[data-theme="light"] .markdownCode     { color: #6f894e; }

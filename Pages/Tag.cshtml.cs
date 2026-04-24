@@ -3,8 +3,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Sourceman.Web.Pages;
 
-public class BlogPostModel : PageModel
+public class TagModel : PageModel
 {
     [FromRoute]
-    public string? Slug { get; set; }
+    public string? Tag { get; set; }
 }

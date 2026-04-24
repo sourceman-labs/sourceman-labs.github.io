@@ -33,7 +33,7 @@
             <div class="post-tags">
                 @foreach (var tag in project.Tags)
                 {
-                    <span class="tag">#@tag</span>
+                    <a href="@Projects.GetTagLink(tag)" class="tag">#@tag</a>
                 }
             </div>
         }
@@ -51,7 +51,10 @@
     </div>
 </article>
 
-@implements IRenderStatic<ProjectDetailModel>
+@using ServiceStack
+@using ServiceStack.Mvc
+@using Sourceman.Web.Pages
+@implements ServiceStack.Mvc.IRenderStatic<Sourceman.Web.Pages.ProjectDetailModel>
 
 @functions {
     public List<ProjectDetailModel> GetStaticProps(RenderContext ctx)

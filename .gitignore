@@ -34,3 +34,6 @@ temp/
 
 # Playwright MCP (local browser automation config)
 .playwright-mcp/
+
+# Migration tooling
+tools/contentful-migrate/node_modules/

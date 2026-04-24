@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ServiceStack.IO;
 
-[assembly: HostingStartup(typeof(SourcemanBlog.AppHost))]
+[assembly: HostingStartup(typeof(Sourceman.Web.AppHost))]
 
-namespace SourcemanBlog;
+namespace Sourceman.Web;
 
-public class AppHost() : AppHostBase("SourcemanBlog"), IHostingStartup
+public class AppHost() : AppHostBase("Sourceman.Web"), IHostingStartup
 {
     public void Configure(IWebHostBuilder builder) => builder
         .ConfigureServices((context, services) =>

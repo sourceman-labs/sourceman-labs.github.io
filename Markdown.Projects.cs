@@ -1,7 +1,7 @@
 using Markdig;
 using ServiceStack.IO;
 
-namespace SourcemanBlog;
+namespace Sourceman.Web;
 
 public class MarkdownProjects(ILogger<MarkdownProjects> log, IWebHostEnvironment env, IVirtualFiles fs)
     : MarkdownPagesBase<Project>(log, env, fs)
@@ -23,6 +23,7 @@ public class MarkdownProjects(ILogger<MarkdownProjects> log, IWebHostEnvironment
     }
 
     public string GetProjectLink(Project project) => $"/projects/{project.Slug}/";
+    public string GetTagLink(string tag) => $"/tags/{tag.GenerateSlug()}/";
 
     public Project? FindProjectBySlug(string slug) => Fresh(VisibleProjects.FirstOrDefault(x => x.Slug == slug));
 

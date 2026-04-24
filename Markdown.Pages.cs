@@ -1,6 +1,6 @@
 using ServiceStack.IO;
 
-namespace SourcemanBlog;
+namespace Sourceman.Web;
 
 // Stub implementation for markdown pages (not currently used but required by MarkdownTagHelper)
 public class MarkdownPages(ILogger<MarkdownPages> log, IWebHostEnvironment env, IVirtualFiles fs)

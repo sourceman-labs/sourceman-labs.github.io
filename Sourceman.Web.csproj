@@ -27,8 +27,10 @@
 
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.44.*" />
+    <PackageReference Include="NUglify" Version="1.21.17" />
     <PackageReference Include="ServiceStack" Version="10.*" />
     <PackageReference Include="ServiceStack.Mvc" Version="10.*" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="10.*" />
+    <PackageReference Include="TextMateSharp.Grammars" Version="2.0.3" />
   </ItemGroup>
 </Project>

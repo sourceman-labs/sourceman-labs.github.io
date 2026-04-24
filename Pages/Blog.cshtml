@@ -1,4 +1,5 @@
 @page "/blog"
+@using ServiceStack.Mvc
 @attribute [RenderStatic]
 @inject MarkdownBlog Blog
 @{
@@ -19,53 +20,54 @@
 
     @if (posts.Any())
     {
+        var postsByYear = posts.GroupBy(p => p.Date?.Year ?? 0)
+                               .OrderByDescending(g => g.Key);
+
         <section class="posts-section">
-            <div class="posts-list">
-                @foreach (var post in posts)
-                {
-                    <article class="post-card">
-                        <h2 class="post-card-title">
-                            <a href="@Blog.GetPostLink(post)" class="post-card-link">
-                                @post.Title
-                            </a>
-                        </h2>
+            @foreach (var yearGroup in postsByYear)
+            {
+                <h2 class="year-heading">@yearGroup.Key</h2>
+                <div class="posts-list">
+                    @foreach (var post in yearGroup)
+                    {
+                        <article class="post-card">
+                            <h2 class="post-card-title">
+                                <a href="@Blog.GetPostLink(post)" class="post-card-link">
+                                    @post.Title
+                                </a>
+                            </h2>
 
-                        @if (!string.IsNullOrEmpty(post.Summary))
-                        {
-                            <p class="post-card-excerpt">@post.Summary</p>
-                        }
-
-                        <div class="post-card-meta">
-                            <time datetime="@post.Date?.ToString("o")" class="post-card-date">
-                                @Blog.GetDateLabel(post.Date)
-                            </time>
-
-                            @if (post.ReadingTime > 0)
+                            @if (!string.IsNullOrEmpty(post.Summary))
                             {
-                                <span class="separator">•</span>
-                                <span class="post-card-reading-time">@post.ReadingTime min read</span>
+                                <p class="post-card-excerpt">@post.Summary</p>
                             }
 
-                            @if (post.Author != null)
-                            {
-                                <span class="separator">•</span>
-                                <span class="post-card-author">@post.Author</span>
-                            }
+                            <div class="post-card-meta">
+                                <time datetime="@post.Date?.ToString("o")" class="post-card-date">
+                                    @Blog.GetDateLabel(post.Date)
+                                </time>
 
-                            @if (post.Tags.Any())
-                            {
-                                <span class="separator">•</span>
-                                <span class="post-card-tags">
-                                    @foreach (var tag in post.Tags)
-                                    {
-                                        <span class="tag">#@tag</span>
-                                    }
-                                </span>
-                            }
-                        </div>
-                    </article>
-                }
-            </div>
+                                @if (post.ReadingTime > 0)
+                                {
+                                    <span class="separator">•</span>
+                                    <span class="post-card-reading-time">@post.ReadingTime min read</span>
+                                }
+
+                                @if (post.Tags.Any())
+                                {
+                                    <span class="separator">•</span>
+                                    <span class="post-card-tags">
+                                        @foreach (var tag in post.Tags)
+                                        {
+                                            <a href="@Blog.GetTagLink(tag)" class="tag">#@tag</a>
+                                        }
+                                    </span>
+                                }
+                            </div>
+                        </article>
+                    }
+                </div>
+            }
         </section>
     }
     else

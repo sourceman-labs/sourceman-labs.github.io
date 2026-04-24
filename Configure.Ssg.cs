@@ -1,6 +1,6 @@
-[assembly: HostingStartup(typeof(SourcemanBlog.ConfigureSsg))]
+[assembly: HostingStartup(typeof(Sourceman.Web.ConfigureSsg))]
 
-namespace SourcemanBlog;
+namespace Sourceman.Web;
 
 public class ConfigureSsg : IHostingStartup
 {

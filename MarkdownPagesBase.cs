@@ -12,7 +12,7 @@ using Markdig.Extensions.CustomContainers;
 using ServiceStack.IO;
 using ServiceStack.Text;
 
-namespace SourcemanBlog;
+namespace Sourceman.Web;
 
 public class MarkdigConfig
 {
@@ -175,7 +175,10 @@ public abstract class MarkdownPagesBase<T>(ILogger log, IWebHostEnvironment env,
             .ConvertTo<T>()
             ?? typeof(T).CreateInstance<T>();
 
-        doc.Tags = doc.Tags.Map(x => x.Trim());
+        doc.Tags = doc.Tags.Map(x => x.Trim().Trim('"'));
+        doc.Title = doc.Title?.Trim('"');
+        doc.Author = doc.Author?.Trim('"');
+        doc.Summary = doc.Summary?.Trim('"');
         doc.Content = content;
         doc.DocumentMap = document.GetData(nameof(DocumentMap)) as DocumentMap;
 
@@ -783,16 +786,20 @@ public class YouTubeContainerRenderer : HtmlObjectRenderer<CustomContainer>
     }
 }
 
-public class CustomCodeBlockRenderers(ContainerExtensions extensions, CodeBlockRenderer? underlyingRenderer = null)
+public class CustomCodeBlockRenderers(ContainerExtensions extensions, HtmlObjectRenderer<CodeBlock>? underlyingRenderer = null)
     : HtmlObjectRenderer<CodeBlock>
 {
     protected override void Write(HtmlRenderer renderer, CodeBlock obj)
     {
-        var useRenderer = obj is FencedCodeBlock { Info: not null } f &&
-                          extensions.CodeBlocks.TryGetValue(f.Info, out var customRenderer)
-            ? customRenderer(underlyingRenderer)
-            : underlyingRenderer ?? new CodeBlockRenderer();
-        useRenderer.Write(renderer, obj);
+        if (obj is FencedCodeBlock { Info: not null } f &&
+            extensions.CodeBlocks.TryGetValue(f.Info, out var customRenderer))
+        {
+            var origRenderer = underlyingRenderer as CodeBlockRenderer;
+            customRenderer(origRenderer).Write(renderer, obj);
+            return;
+        }
+
+        (underlyingRenderer ?? new CodeBlockRenderer()).Write(renderer, obj);
     }
 }
 
@@ -921,8 +928,9 @@ public class ContainerExtensions : IMarkdownExtension
                 htmlRenderer.ObjectRenderers.Remove(originalCodeBlockRenderer);
             }
 
+            var syntaxHighlighter = new SyntaxHighlightingCodeBlockRenderer(originalCodeBlockRenderer);
             htmlRenderer.ObjectRenderers.AddIfNotAlready(
-                new CustomCodeBlockRenderers(this, originalCodeBlockRenderer));
+                new CustomCodeBlockRenderers(this, syntaxHighlighter));
 
             if (!htmlRenderer.ObjectRenderers.Contains<CustomContainerRenderers>())
             {

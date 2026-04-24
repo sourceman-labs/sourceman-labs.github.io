@@ -2,7 +2,7 @@ using System.Globalization;
 using Markdig;
 using ServiceStack.IO;
 
-namespace SourcemanBlog;
+namespace Sourceman.Web;
 
 public class MarkdownBlog(ILogger<MarkdownBlog> log, IWebHostEnvironment env, IVirtualFiles fs)
     : MarkdownPagesBase<BlogPost>(log, env, fs)
@@ -23,7 +23,7 @@ public class MarkdownBlog(ILogger<MarkdownBlog> log, IWebHostEnvironment env, IV
     }
 
     public string GetPostLink(BlogPost post) => $"/blog/{post.Slug}/";
-    public string GetTagLink(string tag) => $"/blog/tagged/{tag.GenerateSlug()}/";
+    public string GetTagLink(string tag) => $"/tags/{tag.GenerateSlug()}/";
     public string GetDateLabel(DateTime? date) => X.Map(date ?? DateTime.UtcNow, d => d.ToString("MMMM d, yyyy"))!;
 
     public BlogPost? FindPostBySlug(string slug) => Fresh(VisiblePosts.FirstOrDefault(x => x.Slug == slug));

@@ -3,7 +3,7 @@ using Markdig;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
-namespace SourcemanBlog;
+namespace Sourceman.Web;
 
 [HtmlTargetElement("markdown", TagStructure = TagStructure.NormalOrSelfClosing)]
 [HtmlTargetElement(Attributes = "markdown")]
