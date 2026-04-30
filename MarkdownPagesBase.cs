@@ -710,20 +710,12 @@ public class IncludeContainerInlineRenderer : HtmlObjectRenderer<CustomContainer
         if (include.EndsWith(".md"))
         {
             var includes = HostContext.TryResolve<MarkdownIncludes>();
-            var pages = HostContext.TryResolve<MarkdownPages>();
             // default relative path to _includes/
             include = include[0] != '/'
                 ? "_includes/" + include
                 : include.TrimStart('/');
 
             doc = includes?.Pages.FirstOrDefault(x => x.Path == include);
-            if (doc == null && pages != null)
-            {
-                var prefix = include.LeftPart('/');
-                var slug = include.LeftPart('.');
-                var allIncludes = pages.GetVisiblePages(prefix, allDirectories: true);
-                doc = allIncludes.FirstOrDefault(x => x.Slug == slug);
-            }
         }
 
         if (doc?.Preview != null)

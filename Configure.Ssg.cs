@@ -17,10 +17,6 @@ public class ConfigureSsg : IHostingStartup
             {
                 MarkdigConfig.Set(new MarkdigConfig
                 {
-                    ConfigurePipeline = pipeline =>
-                    {
-                        // Extend Markdig Pipeline if needed
-                    },
                     ConfigureContainers = config =>
                     {
                         config.AddBuiltInContainers();
@@ -32,8 +28,7 @@ public class ConfigureSsg : IHostingStartup
 
                 var projects = appHost.Resolve<MarkdownProjects>();
                 projects.LoadFrom("_projects");
-            },
-            afterAppHostInit: appHost => { });
+            });
 }
 
 // Generic markdown file info

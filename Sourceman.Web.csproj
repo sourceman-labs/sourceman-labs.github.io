@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Using Include="SourcemanBlog" />
+    <Using Include="Sourceman.Web" />
     <Using Include="ServiceStack" />
     <Using Include="ServiceStack.Mvc" />
   </ItemGroup>

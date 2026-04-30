@@ -34,10 +34,5 @@ public static class HtmlHelpers
         ? AppConfig.Instance.LocalBaseUrl.CombineWith(relativePath)
         : AppConfig.Instance.PublicBaseUrl.CombineWith(relativePath);
 
-    private static string ToAbsoluteApiUrl(string? relativePath) => HostContext.DebugMode
-        ? AppConfig.Instance.LocalBaseUrl.CombineWith(relativePath)
-        : AppConfig.Instance.PublicBaseUrl.CombineWith(relativePath);
-
     public static string ContentUrl(this IHtmlHelper html, string? relativePath) => ToAbsoluteContentUrl(relativePath);
-    public static string ApiUrl(this IHtmlHelper html, string? relativePath) => ToAbsoluteApiUrl(relativePath);
 }
