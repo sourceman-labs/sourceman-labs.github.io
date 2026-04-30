@@ -10,7 +10,6 @@ public class AppHost() : AppHostBase("Sourceman.Web"), IHostingStartup
     public void Configure(IWebHostBuilder builder) => builder
         .ConfigureServices((context, services) =>
         {
-            // Configure ASP.NET Core IOC Dependencies
             context.Configuration.GetSection(nameof(AppConfig)).Bind(AppConfig.Instance);
             services.AddSingleton(AppConfig.Instance);
         });
@@ -31,11 +30,11 @@ public class AppConfig
 
 public static class HtmlHelpers
 {
-    public static string ToAbsoluteContentUrl(string? relativePath) => HostContext.DebugMode
+    private static string ToAbsoluteContentUrl(string? relativePath) => HostContext.DebugMode
         ? AppConfig.Instance.LocalBaseUrl.CombineWith(relativePath)
         : AppConfig.Instance.PublicBaseUrl.CombineWith(relativePath);
 
-    public static string ToAbsoluteApiUrl(string? relativePath) => HostContext.DebugMode
+    private static string ToAbsoluteApiUrl(string? relativePath) => HostContext.DebugMode
         ? AppConfig.Instance.LocalBaseUrl.CombineWith(relativePath)
         : AppConfig.Instance.PublicBaseUrl.CombineWith(relativePath);
 
