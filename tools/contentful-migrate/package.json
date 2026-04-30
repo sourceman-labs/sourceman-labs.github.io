@@ -1,9 +1,0 @@
-{
-  "name": "contentful-migrate",
-  "version": "1.0.0",
-  "private": true,
-  "type": "module",
-  "dependencies": {
-    "contentful": "^11.0.0"
-  }
-}
