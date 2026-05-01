@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@(ViewData["Title"] != null ? $"{ViewData["Title"]} | " : "")sourceman</title>
+    <meta name="description" content="@(ViewData["Description"] ?? "A programming blog about code, development, and open source")">
+
+    @if (ViewData["CanonicalUrl"] != null)
+    {
+        <link rel="canonical" href="@ViewData["CanonicalUrl"]">
+    }
+
+    @* Preload critical fonts *@
+    <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
+
+    @* Main stylesheet *@
+    <link rel="stylesheet" href="/css/main.css" asp-append-version="true">
+
+    @* Syntax highlighting stylesheet *@
+    <link rel="stylesheet" href="/css/syntax.css" asp-append-version="true">
+
+    @* Meta tags for social sharing *@
+    <meta property="og:title" content="@(ViewData["Title"] ?? "sourceman")">
+    <meta property="og:description" content="@(ViewData["Description"] ?? "A programming blog about code, development, and open source")">
+    <meta property="og:type" content="@(ViewData["OgType"] ?? "website")">
+    @if (ViewData["CanonicalUrl"] != null)
+    {
+        <meta property="og:url" content="@ViewData["CanonicalUrl"]">
+    }
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="@(ViewData["Title"] ?? "sourceman")">
+    <meta name="twitter:description" content="@(ViewData["Description"] ?? "A programming blog about code, development, and open source")">
+
+    @* Favicon *@
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>▸</text></svg>">
+</head>
+<body>
+    <div class="container">
+        <header class="site-header">
+            <a href="/" class="logo-link">
+                <div class="logo-mark">
+                    <span class="logo-prompt">&gt;_</span>
+                    <span class="logo-name">srcman</span>
+                </div>
+            </a>
+
+            <nav class="site-nav">
+                <a href="/" class="nav-link">home</a>
+                <a href="/projects/" class="nav-link">projects</a>
+                <a href="/blog/" class="nav-link">blog</a>
+                <a href="/about/" class="nav-link">about</a>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                    <span class="theme-icon">◐</span>
+                </button>
+            </nav>
+        </header>
+
+        <main class="main-content">
+            @RenderBody()
+        </main>
+
+        <footer class="site-footer">
+            <p>All content has been meticulously handcrafted using certified organic human labor. <br/>The by-products, blood, sweat and tears have all been carefully recycled.</p>
+            <br/>
+            <p>Sourceman AB &middot; <a href="https://github.com/sourceman-labs" target="_blank" rel="noopener noreferrer" class="footer-links">github</a> &middot; © <span id="current-year"></span></p>
+        </footer>
+    </div>
+
+    @* Set current year *@
+    <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+
+    @* Theme toggle script (minimal JS) *@
+    <script src="/js/theme-toggle.js" asp-append-version="true"></script>
+</body>
+</html>

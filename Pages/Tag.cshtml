@@ -1,0 +1,136 @@
+@page "/tags/{tag}"
+@attribute [RenderStatic]
+@model TagModel
+@inject MarkdownBlog Blog
+@inject MarkdownProjects Projects
+@{
+    var posts = Blog.GetPosts(Model.Tag);
+    var projects = Projects.GetProjects(Model.Tag);
+
+    ViewData["Title"] = $"Tagged #{Model.Tag}";
+    ViewData["Description"] = $"Posts and projects tagged with {Model.Tag}";
+    Layout = "_Layout";
+}
+
+<div class="blog-page content-narrow">
+    <section class="page-header">
+        <h1>Tagged #@Model.Tag</h1>
+        <p class="page-description">
+            <a href="/blog/">All posts</a> · <a href="/projects/">All projects</a>
+        </p>
+    </section>
+
+    @if (projects.Any())
+    {
+        <section class="posts-section">
+            <h2 class="year-heading">Projects</h2>
+            <div class="posts-list">
+                @foreach (var project in projects)
+                {
+                    <article class="post-card">
+                        <h2 class="post-card-title">
+                            <a href="@Projects.GetProjectLink(project)" class="post-card-link">
+                                @project.Title
+                            </a>
+                        </h2>
+
+                        @if (!string.IsNullOrEmpty(project.Summary))
+                        {
+                            <p class="post-card-excerpt">@project.Summary</p>
+                        }
+
+                        <div class="post-card-meta">
+                            @if (!string.IsNullOrEmpty(project.Url))
+                            {
+                                <a href="@project.Url" target="_blank" rel="noopener noreferrer" class="project-github-link">GitHub</a>
+                            }
+
+                            @if (project.Tags.Any())
+                            {
+                                <span class="separator">•</span>
+                                <span class="post-card-tags">
+                                    @foreach (var tag in project.Tags)
+                                    {
+                                        <a href="@Projects.GetTagLink(tag)" class="tag">#@tag</a>
+                                    }
+                                </span>
+                            }
+                        </div>
+                    </article>
+                }
+            </div>
+        </section>
+    }
+
+    @if (posts.Any())
+    {
+        <section class="posts-section">
+            <h2 class="year-heading">Posts</h2>
+            <div class="posts-list">
+                @foreach (var post in posts)
+                {
+                    <article class="post-card">
+                        <h2 class="post-card-title">
+                            <a href="@Blog.GetPostLink(post)" class="post-card-link">
+                                @post.Title
+                            </a>
+                        </h2>
+
+                        @if (!string.IsNullOrEmpty(post.Summary))
+                        {
+                            <p class="post-card-excerpt">@post.Summary</p>
+                        }
+
+                        <div class="post-card-meta">
+                            <time datetime="@post.Date?.ToString("o")" class="post-card-date">
+                                @Blog.GetDateLabel(post.Date)
+                            </time>
+
+                            @if (post.ReadingTime > 0)
+                            {
+                                <span class="separator">•</span>
+                                <span class="post-card-reading-time">@post.ReadingTime min read</span>
+                            }
+
+                            @if (post.Tags.Any())
+                            {
+                                <span class="separator">•</span>
+                                <span class="post-card-tags">
+                                    @foreach (var tag in post.Tags)
+                                    {
+                                        <a href="@Blog.GetTagLink(tag)" class="tag">#@tag</a>
+                                    }
+                                </span>
+                            }
+                        </div>
+                    </article>
+                }
+            </div>
+        </section>
+    }
+
+    @if (!projects.Any() && !posts.Any())
+    {
+        <div class="no-posts">
+            <p>Nothing found with this tag.</p>
+        </div>
+    }
+</div>
+
+@using ServiceStack
+@using ServiceStack.Mvc
+@using Sourceman.Web.Pages
+@implements ServiceStack.Mvc.IRenderStatic<Sourceman.Web.Pages.TagModel>
+
+@functions {
+    public List<TagModel> GetStaticProps(RenderContext ctx)
+    {
+        var blog = ctx.Resolve<MarkdownBlog>();
+        var projects = ctx.Resolve<MarkdownProjects>();
+        var tags = blog.GetPosts().SelectMany(p => p.Tags)
+            .Concat(projects.GetProjects().SelectMany(p => p.Tags))
+            .Distinct()
+            .ToList();
+        return tags.Map(tag => new TagModel { Tag = tag.GenerateSlug() });
+    }
+}

@@ -1,0 +1,137 @@
+@page "/about"
+@using ServiceStack.Mvc
+@attribute [RenderStatic]
+@{
+    ViewData["Title"] = "CV";
+    ViewData["Description"] = "Magnus Källman — Senior Software Engineer & Cloud Architect";
+    Layout = "_Layout";
+}
+
+<div class="about-page content-narrow">
+
+    <div class="cv-header">
+        <h1 class="cv-name">Magnus Källman</h1>
+        <p class="cv-title">Senior Software Engineer · Cloud Architect · Stockholm</p>
+    </div>
+
+    <div class="cv-now">
+        <div class="cv-now-label">Now</div>
+        <p>Engaged at Recharge — building AI agents and agentic workflows to add real business value via Sourceman AB.</p>
+    </div>
+
+    <div class="cv-section">
+        <h2 class="about-heading">Experience</h2>
+        <p class="cv-section-intro">I take pride in my craft, and the quality of the software I ship matters deeply to me.</p>
+        <p class="cv-section-intro">I have been coding since 2006 and started out as a professional web developer in the age of jQuery and Internet Explorer, with .NET Framework on the server.</p>
+        <p class="cv-section-intro">For the past ten years, my focus has been backend engineering — writing scalable, maintainable and performant applications, reaching for the techniques that fit each specific problem.</p>
+        <p class="cv-section-intro">Since the early period of my career I have been taking responsibility for build and deployment infrastructure, and have shipped pipelines on TeamCity, Octopus Deploy, Azure DevOps, and GitHub Actions.</p>
+        <p class="cv-section-intro">In my spare time, I've tinkered with everything from compilers, machine learning and IoT to cloud and web development.</p>
+        <p class="cv-section-intro">Below is a selection of my longer-running consultancy engagements. I tend to stay with the same clients for extended periods, learning the business and compounding value over time — though I've also done short, targeted work, such as introducing better developer tooling and workflows or helping teams survive Black Friday traffic peaks.</p>
+        <blockquote class="about-quote">
+            Software performance <em>is still</em> one of the most overlooked features.
+        </blockquote>
+        <div class="cv-entries">
+
+            <div class="cv-entry">
+                <div>
+                    <div class="cv-entry-company">Recharge</div>
+                    <div class="cv-entry-role">AI Engineer</div>
+                    <p class="cv-entry-desc">Building AI agents and agentic workflows that deliver measurable business value for enterprise clients.</p>
+                </div>
+                <div class="cv-entry-dates">Jan 2026 – Present</div>
+            </div>
+
+            <div class="cv-entry">
+                <div>
+                    <div class="cv-entry-company">Martin &amp; Servera</div>
+                    <div class="cv-entry-role">Solution Architect/Senior Backend Engineer</div>
+                    <p class="cv-entry-desc">Led backend API development for mobile application. Built microservice architecture on Azure with .NET, Docker, and async patterns.</p>
+                </div>
+                <div class="cv-entry-dates">Mar 2023 – Mar 2026</div>
+            </div>
+
+            <div class="cv-entry">
+                <div>
+                    <div class="cv-entry-company">Afound</div>
+                    <div class="cv-entry-role">Episerver Architect</div>
+                    <p class="cv-entry-desc">Took ownership of a large legacy codebase. Drove modernization of development practices and tooling across the team.</p>
+                </div>
+                <div class="cv-entry-dates">Feb 2019 – Jun 2022</div>
+            </div>
+
+            <div class="cv-entry">
+                <div>
+                    <div class="cv-entry-company">Natur &amp; Kultur</div>
+                    <div class="cv-entry-role">Solution Architect · Lead Developer</div>
+                    <p class="cv-entry-desc">Rebuilt the publisher's website on the latest Episerver stack with continuous delivery from day one.</p>
+                </div>
+                <div class="cv-entry-dates">Dec 2017 – Aug 2018</div>
+            </div>
+
+            <div class="cv-entry">
+                <div>
+                    <div class="cv-entry-company">Type &amp; Tell</div>
+                    <div class="cv-entry-role">Solution Architect</div>
+                    <p class="cv-entry-desc">Designed and built a self-publishing platform — professional book creation tools for independent authors.</p>
+                </div>
+                <div class="cv-entry-dates">Jan 2015 – Dec 2017</div>
+            </div>
+
+            <div class="cv-entry">
+                <div>
+                    <div class="cv-entry-company">Coop</div>
+                    <div class="cv-entry-role">Developer</div>
+                    <p class="cv-entry-desc">Developer on coop.se — one of Sweden's largest food retail websites.</p>
+                </div>
+                <div class="cv-entry-dates">Aug 2012 – Dec 2014</div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="cv-section">
+        <h2 class="about-heading">Skills</h2>
+        <div class="cv-skills">
+            <span class="cv-skill-tag">Microsoft Azure</span>
+            <span class="cv-skill-tag">.NET</span>
+            <span class="cv-skill-tag">Go</span>
+            <span class="cv-skill-tag">Rust</span>
+            <span class="cv-skill-tag">Cloud Architecture</span>
+            <span class="cv-skill-tag">CI/CD</span>
+            <span class="cv-skill-tag">Microservices</span>
+            <span class="cv-skill-tag">Event-Driven Architecture</span>
+            <span class="cv-skill-tag">Docker</span>
+            <span class="cv-skill-tag">Multi-Tier Caching</span>
+            <span class="cv-skill-tag">Redis</span>
+            <span class="cv-skill-tag">AI Agents</span>
+            <span class="cv-skill-tag">Performance Engineering</span>
+            <span class="cv-skill-tag">Advanced Troubleshooting</span>
+        </div>
+    </div>
+
+    <div class="cv-section">
+        <h2 class="about-heading">Certifications</h2>
+        <p class="cv-section-intro">While i don't cherish certificates and the act of taken the exams, learning is both immensely fun and important. Here are some certificates i've acquired in the past.</p>
+        <ul class="cv-cert-list">
+            <li><span>Certified Scrum Master — Scrum Alliance</span><span class="cv-cert-year">2017</span></li>
+            <li><span>MCSD: Web Applications — Microsoft</span><span class="cv-cert-year">2013</span></li>
+            <li><span>EPiServer Certified Developer</span><span class="cv-cert-year">2012</span></li>
+            <li><span>MCTS: .NET Framework 4, Web Applications</span><span class="cv-cert-year">2012</span></li>
+        </ul>
+    </div>
+
+    <section class="about-links cv-section">
+        <h2 class="about-heading">Find me</h2>
+        <ul class="link-list">
+            <li>
+                <a href="https://github.com/magkal" target="_blank" rel="noopener noreferrer">GitHub</a>
+                <span class="link-handle">@@magkal</span>
+            </li>
+            <li>
+                <a href="https://www.linkedin.com/in/magnus-k%C3%A4llman-976167114/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <span class="link-handle">Magnus Källman</span>
+            </li>
+        </ul>
+    </section>
+
+</div>

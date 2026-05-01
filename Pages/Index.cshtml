@@ -1,0 +1,139 @@
+@page "/"
+@using ServiceStack.Mvc
+@attribute [RenderStatic]
+@inject MarkdownBlog Blog
+@inject MarkdownProjects Projects
+@{
+    ViewData["Title"] = "Home";
+    ViewData["Description"] = "A programming blog about code, development, and open source";
+    Layout = "_Layout";
+
+    var posts = Blog.GetPosts().Take(5).ToList();
+    var projects = Projects.GetProjects();
+}
+
+<section class="home-intro">
+    <div class="home-intro-header">
+        <h1 class="home-name">Magnus Källman</h1>
+        <p class="home-role">Senior Software Engineer · Cloud Architect · Freelance</p>
+    </div>
+    <p class="home-intro-primary">Hi, I'm Magnus — a freelancing senior software engineer, cloud architect, and professional problem solver. Working in software since 2012, mostly around the Microsoft .NET stack and Azure. I care deeply about my trade and the users of my software.</p>
+    <p class="home-intro-secondary">When I'm not coding, I'm probably gardening, sport climbing, reading a book, or fermenting something.</p>
+    <a href="/about/" class="home-cv-link">View CV →</a>
+</section>
+
+<div class="home-split">
+    <section class="home-panel">
+        <h2 class="section-title">Projects</h2>
+
+        @if (projects.Any())
+        {
+            <div class="panel-list">
+                @foreach (var project in projects)
+                {
+                    <article class="panel-card">
+                        <h3 class="panel-card-title">
+                            <a href="@Projects.GetProjectLink(project)" class="post-card-link">
+                                @project.Title
+                            </a>
+                        </h3>
+
+                        @if (!string.IsNullOrEmpty(project.Summary))
+                        {
+                            <p class="panel-card-excerpt">@project.Summary</p>
+                        }
+
+                        <div class="post-card-meta">
+                            @if (!string.IsNullOrEmpty(project.Url))
+                            {
+                                <a href="@project.Url" target="_blank" rel="noopener noreferrer" class="project-github-link">GitHub</a>
+                            }
+
+                            @if (project.Tags.Any())
+                            {
+                                <span class="separator">•</span>
+                                <span class="post-card-tags">
+                                    @foreach (var tag in project.Tags)
+                                    {
+                                        <a href="@Projects.GetTagLink(tag)" class="tag">#@tag</a>
+                                    }
+                                </span>
+                            }
+                        </div>
+                    </article>
+                }
+            </div>
+
+            <div class="view-all">
+                <a href="/projects/" class="view-all-link">All projects →</a>
+            </div>
+        }
+        else
+        {
+            <div class="no-posts">
+                <p>No projects yet.</p>
+            </div>
+        }
+    </section>
+
+    <section class="home-panel">
+        <h2 class="section-title">Recent Posts</h2>
+
+        @if (posts.Any())
+        {
+            <div class="panel-list">
+                @foreach (var post in posts)
+                {
+                    <article class="panel-card">
+                        <h3 class="panel-card-title">
+                            <a href="@Blog.GetPostLink(post)" class="post-card-link">
+                                @post.Title
+                            </a>
+                        </h3>
+
+                        @if (!string.IsNullOrEmpty(post.Summary))
+                        {
+                            <p class="panel-card-excerpt">@post.Summary</p>
+                        }
+
+                        <div class="post-card-meta">
+                            <time datetime="@post.Date?.ToString("o")" class="post-card-date">
+                                @Blog.GetDateLabel(post.Date)
+                            </time>
+
+                            @if (post.ReadingTime > 0)
+                            {
+                                <span class="separator">•</span>
+                                <span class="post-card-reading-time">@post.ReadingTime min read</span>
+                            }
+
+                            @if (post.Tags.Any())
+                            {
+                                <span class="separator">•</span>
+                                <span class="post-card-tags">
+                                    @foreach (var tag in post.Tags.Take(3))
+                                    {
+                                        <a href="@Blog.GetTagLink(tag)" class="tag">#@tag</a>
+                                    }
+                                </span>
+                            }
+                        </div>
+                    </article>
+                }
+            </div>
+
+            @if (Blog.GetPosts().Count > 5)
+            {
+                <div class="view-all">
+                    <a href="/blog/" class="view-all-link">All posts →</a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="no-posts">
+                <p>No posts yet.</p>
+            </div>
+        }
+    </section>
+</div>
