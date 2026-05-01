@@ -1,0 +1,39 @@
+# Environment variables & secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets/
+config/local.json
+
+# .NET build output
+bin/
+obj/
+dist/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Playwright MCP (local browser automation config)
+.playwright-mcp/
+
+# Migration tooling
+tools/contentful-migrate/node_modules/
