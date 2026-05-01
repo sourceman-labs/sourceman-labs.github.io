@@ -55,6 +55,19 @@ if (args.Length > 0 && args[0] == "--AppTasks=prerender")
             File.Delete(file);
     }
 
+    // GitHub Pages serves /slug/ from slug/index.html, not slug.html.
+    // Restructure every non-index .html to slug/index.html so trailing-slash URLs resolve.
+    foreach (var file in Directory.GetFiles(distDir, "*.html", SearchOption.AllDirectories).ToList())
+    {
+        if (Path.GetFileName(file) == "index.html") continue;
+
+        var slug = Path.GetFileNameWithoutExtension(file);
+        var parentDir = Path.GetDirectoryName(file)!;
+        var targetDir = Path.Combine(parentDir, slug);
+        Directory.CreateDirectory(targetDir);
+        File.Move(file, Path.Combine(targetDir, "index.html"));
+    }
+
     // Minify CSS and JS files in dist
     foreach (var cssFile in Directory.GetFiles(distDir, "*.css", SearchOption.AllDirectories))
     {
