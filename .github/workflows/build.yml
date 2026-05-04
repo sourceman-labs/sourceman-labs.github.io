@@ -15,6 +15,7 @@ on:
 
 env:
   DOTNET_VERSION: '10.0.x'
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
@@ -40,7 +41,6 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
-          include-prerelease: true
 
       - name: Restore dependencies
         run: dotnet restore

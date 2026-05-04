@@ -110,6 +110,7 @@ public interface IMarkdownPages
 public abstract class MarkdownPagesBase<T>(ILogger log, IWebHostEnvironment env, IVirtualFiles fs) : IMarkdownPages
     where T : MarkdownFileBase
 {
+    protected readonly ILogger Log = log;
     public abstract string Id { get; }
     public IVirtualFiles VirtualFiles => fs;
 
@@ -145,7 +146,8 @@ public abstract class MarkdownPagesBase<T>(ILogger log, IWebHostEnvironment env,
         if (doc == null || !env.IsDevelopment() || AppTasks.IsRunAsAppTask())
             return doc;
         var newDoc = Load(doc.Path);
-        doc.Update(newDoc);
+        if (newDoc != null)
+            doc.Update(newDoc);
         return doc;
     }
 
@@ -1045,6 +1047,6 @@ public class MarkdownMenu
 
 public class MarkdownMenuItem
 {
-    public string Text { get; set; }
-    public string Link { get; set; }
+    public required string Text { get; set; }
+    public required string Link { get; set; }
 }
