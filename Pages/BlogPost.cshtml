@@ -14,7 +14,7 @@
     ViewData["Title"] = post.Title;
     ViewData["Description"] = post.Summary ?? post.Title;
     ViewData["OgType"] = "article";
-    ViewData["CanonicalUrl"] = $"https://sourceman.se{Blog.GetPostLink(post)}";
+    ViewData["CanonicalUrl"] = $"https://www.sourceman.se{Blog.GetPostLink(post)}";
     Layout = "_Layout";
 }
 

@@ -9,6 +9,7 @@
 
     ViewData["Title"] = $"Tagged #{Model.Tag}";
     ViewData["Description"] = $"Posts and projects tagged with {Model.Tag}";
+    ViewData["CanonicalUrl"] = $"https://www.sourceman.se/tags/{Model.Tag}/";
     Layout = "_Layout";
 }
 

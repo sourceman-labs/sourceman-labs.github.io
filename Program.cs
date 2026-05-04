@@ -68,6 +68,44 @@ if (args.Length > 0 && args[0] == "--AppTasks=prerender")
         File.Move(file, Path.Combine(targetDir, "index.html"));
     }
 
+    // Generate sitemap.xml
+    var blog = appHost.Resolve<Sourceman.Web.MarkdownBlog>();
+    var projects = appHost.Resolve<Sourceman.Web.MarkdownProjects>();
+    var allPosts = blog.GetPosts();
+    var allProjects = projects.GetProjects();
+    var baseUrl = "https://www.sourceman.se";
+    var sitemapUrls = new List<(string Loc, string? LastMod, string Priority)>
+    {
+        ($"{baseUrl}/", null, "1.0"),
+        ($"{baseUrl}/blog/", null, "0.9"),
+        ($"{baseUrl}/projects/", null, "0.9"),
+        ($"{baseUrl}/about/", null, "0.8"),
+    };
+    foreach (var post in allPosts)
+        sitemapUrls.Add(($"{baseUrl}{blog.GetPostLink(post)}", post.Date?.ToString("yyyy-MM-dd"), "0.7"));
+    foreach (var project in allProjects)
+        sitemapUrls.Add(($"{baseUrl}{projects.GetProjectLink(project)}", null, "0.7"));
+    var allTags = allPosts.SelectMany(p => p.Tags)
+        .Concat(allProjects.SelectMany(p => p.Tags))
+        .Distinct();
+    foreach (var tag in allTags)
+        sitemapUrls.Add(($"{baseUrl}/tags/{tag.GenerateSlug()}/", null, "0.5"));
+
+    var sitemapXml = new System.Text.StringBuilder();
+    sitemapXml.AppendLine("""<?xml version="1.0" encoding="UTF-8"?>""");
+    sitemapXml.AppendLine("""<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">""");
+    foreach (var (loc, lastMod, priority) in sitemapUrls)
+    {
+        sitemapXml.AppendLine("  <url>");
+        sitemapXml.AppendLine($"    <loc>{loc}</loc>");
+        if (lastMod != null) sitemapXml.AppendLine($"    <lastmod>{lastMod}</lastmod>");
+        sitemapXml.AppendLine($"    <priority>{priority}</priority>");
+        sitemapXml.AppendLine("  </url>");
+    }
+    sitemapXml.AppendLine("</urlset>");
+    File.WriteAllText(Path.Combine(distDir, "sitemap.xml"), sitemapXml.ToString());
+    Console.WriteLine($"Generated sitemap.xml with {sitemapUrls.Count} URLs");
+
     // Minify CSS and JS files in dist
     foreach (var cssFile in Directory.GetFiles(distDir, "*.css", SearchOption.AllDirectories))
     {

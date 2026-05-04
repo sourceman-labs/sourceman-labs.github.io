@@ -6,6 +6,7 @@
 @{
     ViewData["Title"] = "Home";
     ViewData["Description"] = "A programming blog about code, development, and open source";
+    ViewData["CanonicalUrl"] = "https://www.sourceman.se/";
     Layout = "_Layout";
 
     var posts = Blog.GetPosts().Take(5).ToList();
