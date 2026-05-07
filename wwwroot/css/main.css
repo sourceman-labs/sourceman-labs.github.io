@@ -9,7 +9,7 @@
   --surface-2: #444444;
   --text: #e0e0e0;
   --text-secondary: #999999;
-  --text-muted: #666666;
+  --text-muted: #9a9a9a;
   --accent: #ffffff;
   --accent-hover: #cccccc;
   --border: #222222;
@@ -255,10 +255,10 @@ body {
 }
 
 .panel-card {
+  position: relative;
   padding: 0.75rem 0;
   border-bottom: 1px solid var(--border);
 }
-
 
 .panel-card:hover {
   background: var(--bg-secondary);
@@ -267,6 +267,30 @@ body {
 .panel-card-title {
   font-size: 1rem;
   margin-bottom: 0.25rem;
+}
+
+/* Card-link pattern: title link's ::after covers the whole card so clicks
+   anywhere on the card navigate to the post. Nested links are raised above
+   the overlay below. */
+.panel-card .post-card-link::after,
+.post-card .post-card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.panel-card:hover,
+.post-card:hover {
+  cursor: pointer;
+}
+
+/* Keep nested interactive elements clickable above the overlay. */
+.panel-card .tag,
+.panel-card .project-github-link,
+.post-card .tag,
+.post-card .project-github-link {
+  position: relative;
+  z-index: 1;
 }
 
 .panel-card-excerpt {
@@ -350,6 +374,7 @@ body {
 }
 
 .post-card {
+  position: relative;
   padding: 1rem 0;
   border-bottom: 1px solid var(--border);
 }

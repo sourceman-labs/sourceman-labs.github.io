@@ -14,6 +14,7 @@
     ViewData["Title"] = project.Title;
     ViewData["Description"] = project.Summary ?? project.Title;
     ViewData["CanonicalUrl"] = $"https://www.sourceman.se{Projects.GetProjectLink(project)}";
+    ViewData["UseSyntaxHighlighting"] = true;
     Layout = "_Layout";
 }
 

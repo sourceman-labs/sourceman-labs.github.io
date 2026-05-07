@@ -11,14 +11,20 @@
         <link rel="canonical" href="@ViewData["CanonicalUrl"]">
     }
 
+    @* Apply saved theme before paint to avoid a flash of the wrong theme. *@
+    <script>(function(){try{var t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+
     @* Preload critical fonts *@
     <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossorigin>
 
     @* Main stylesheet *@
     <link rel="stylesheet" href="/css/main.css" asp-append-version="true">
 
-    @* Syntax highlighting stylesheet *@
-    <link rel="stylesheet" href="/css/syntax.css" asp-append-version="true">
+    @* Syntax highlighting stylesheet — only on pages that render code *@
+    @if (ViewData["UseSyntaxHighlighting"] is true)
+    {
+        <link rel="stylesheet" href="/css/syntax.css" asp-append-version="true">
+    }
 
     @* Meta tags for social sharing *@
     <meta property="og:title" content="@(ViewData["Title"] ?? "sourceman")">
@@ -69,6 +75,6 @@
     </div>
 
     @* Theme toggle script (minimal JS) *@
-    <script src="/js/theme-toggle.js" asp-append-version="true"></script>
+    <script src="/js/theme-toggle.js" asp-append-version="true" defer></script>
 </body>
 </html>
