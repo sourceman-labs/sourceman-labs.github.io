@@ -1,45 +1,29 @@
-// Minimal theme toggle script (<1KB)
+// Minimal theme toggle script. Initial theme is applied by an inline
+// snippet in <head> to avoid a flash of the wrong theme; this file only
+// wires up the toggle button and system-preference listener.
 (function() {
   const STORAGE_KEY = 'theme';
   const html = document.documentElement;
   const toggleBtn = document.getElementById('theme-toggle');
 
-  // Get stored theme or system preference
-  function getInitialTheme() {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) return stored;
-
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-  }
-
-  // Set theme
   function setTheme(theme) {
     html.setAttribute('data-theme', theme);
     localStorage.setItem(STORAGE_KEY, theme);
   }
 
-  // Toggle theme
   function toggleTheme() {
     const current = html.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    setTheme(next);
+    setTheme(current === 'dark' ? 'light' : 'dark');
   }
 
-  // Initialize
-  setTheme(getInitialTheme());
-
-  // Listen for toggle button clicks
   if (toggleBtn) {
     toggleBtn.addEventListener('click', toggleTheme);
   }
 
-  // Listen for system preference changes
+  // Follow system preference changes only when the user hasn't picked one.
   window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-    // Only auto-switch if user hasn't manually set a preference
     if (!localStorage.getItem(STORAGE_KEY)) {
-      setTheme(e.matches ? 'dark' : 'light');
+      html.setAttribute('data-theme', e.matches ? 'dark' : 'light');
     }
   });
 })();
