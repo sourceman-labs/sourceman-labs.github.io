@@ -29,7 +29,7 @@
                 @foreach (var project in projects)
                 {
                     <article class="post-card">
-                        <h2 class="post-card-title">
+                        <h2 class="post-card-title" style="view-transition-name: project-@project.Slug">
                             <a href="@Projects.GetProjectLink(project)" class="post-card-link">
                                 @project.Title
                             </a>
@@ -71,7 +71,7 @@
                 @foreach (var post in posts)
                 {
                     <article class="post-card">
-                        <h2 class="post-card-title">
+                        <h2 class="post-card-title" style="view-transition-name: post-@post.Slug">
                             <a href="@Blog.GetPostLink(post)" class="post-card-link">
                                 @post.Title
                             </a>

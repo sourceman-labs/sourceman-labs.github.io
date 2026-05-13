@@ -1086,3 +1086,13 @@ a.footer-links:hover {
     margin-top: 0.3rem;
   }
 }
+
+@view-transition { navigation: auto; }
+
+::view-transition-group(root) { animation-duration: 180ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) { animation: none !important; }
+}

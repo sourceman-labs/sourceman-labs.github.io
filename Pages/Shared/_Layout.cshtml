@@ -76,5 +76,8 @@
 
     @* Theme toggle script (minimal JS) *@
     <script src="/js/theme-toggle.js" asp-append-version="true" defer></script>
+
+    @* Prefetch internal links on hover for instant navigation. *@
+    <script>(function(){var s=new Set();document.addEventListener('mouseover',function(e){var a=e.target.closest&&e.target.closest('a[href^="/"]');if(!a||s.has(a.href))return;s.add(a.href);var l=document.createElement('link');l.rel='prefetch';l.href=a.href;document.head.appendChild(l);},{passive:true});})();</script>
 </body>
 </html>

@@ -25,7 +25,7 @@
             @foreach (var project in projects)
             {
                 <article class="post-card">
-                    <h2 class="post-card-title">
+                    <h2 class="post-card-title" style="view-transition-name: project-@project.Slug">
                         <a href="@Projects.GetProjectLink(project)" class="post-card-link">
                             @project.Title
                         </a>

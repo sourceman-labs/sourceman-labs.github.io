@@ -21,7 +21,7 @@
 
 <article class="blog-post content-narrow">
     <header class="post-header">
-        <h1 class="post-title">@post.Title</h1>
+        <h1 class="post-title" style="view-transition-name: post-@post.Slug">@post.Title</h1>
 
         <div class="post-meta">
             <time datetime="@post.Date?.ToString("o")" class="post-date">

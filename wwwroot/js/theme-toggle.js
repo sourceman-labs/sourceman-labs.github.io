@@ -12,8 +12,12 @@
   }
 
   function toggleTheme() {
-    const current = html.getAttribute('data-theme');
-    setTheme(current === 'dark' ? 'light' : 'dark');
+    const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    if (document.startViewTransition) {
+      document.startViewTransition(() => setTheme(next));
+    } else {
+      setTheme(next);
+    }
   }
 
   if (toggleBtn) {
