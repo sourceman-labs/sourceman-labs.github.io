@@ -17,6 +17,6 @@ Turns out our DevOps agents got an updated node version, and the node-sass packa
 
 Thankfully, Microsoft has a built in task for Azure DevOps called "Node.js tool installer" where you can specifially set which node.js version you want your pipline to use.
 
-![node-js-tool-installer](/img/blog/inline-node-js-tool-installer.PNG)
+![node-js-tool-installer](/img/blog/inline-node-js-tool-installer.png)
 
 🖖
