@@ -15,7 +15,7 @@ public class MarkdownProjects(ILogger<MarkdownProjects> log, IWebHostEnvironment
     {
         IEnumerable<Project> results = Projects.Where(IsVisible);
         if (tag != null)
-            results = results.Where(x => x.Tags.Contains(tag));
+            results = results.Where(x => x.Tags.Any(t => t.GenerateSlug() == tag.GenerateSlug()));
         return results
             .OrderBy(x => x.Order ?? int.MaxValue)
             .ThenBy(x => x.Title)

@@ -6,6 +6,7 @@ using Markdig.Parsers;
 using Markdig.Parsers.Inlines;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
+using Markdig.Renderers.Html.Inlines;
 using Markdig.Syntax;
 using Markdig.Syntax.Inlines;
 using Markdig.Extensions.CustomContainers;
@@ -121,6 +122,7 @@ public abstract class MarkdownPagesBase<T>(ILogger log, IWebHostEnvironment env,
             .UseAdvancedExtensions()
             .UseAutoLinkHeadings(this, path)
             .UseHeadingsMap()
+            .UseExternalLinks()
             .UseCustomContainers(MarkdigConfig.Instance.ConfigureContainers);
         MarkdigConfig.Instance.ConfigurePipeline?.Invoke(builder);
 
@@ -396,6 +398,35 @@ public class AutoLinkHeadingsExtension : IMarkdownExtension
     public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
     {
         renderer.ObjectRenderers.Replace<HeadingRenderer>(new AutoLinkHeadingRenderer(RelativeHtmlPath));
+    }
+}
+
+/// <summary>
+/// Opens external links in a new tab.
+/// </summary>
+public class ExternalLinkRenderer : LinkInlineRenderer
+{
+    protected override void Write(HtmlRenderer renderer, LinkInline link)
+    {
+        if (link.Url is { } url && (url.StartsWith("http://") || url.StartsWith("https://")))
+        {
+            link.GetAttributes().AddProperty("target", "_blank");
+            link.GetAttributes().AddProperty("rel", "noopener noreferrer");
+        }
+
+        base.Write(renderer, link);
+    }
+}
+
+public class ExternalLinksExtension : IMarkdownExtension
+{
+    public void Setup(MarkdownPipelineBuilder pipeline)
+    {
+    }
+
+    public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
+    {
+        renderer.ObjectRenderers.Replace<LinkInlineRenderer>(new ExternalLinkRenderer());
     }
 }
 
@@ -1012,6 +1043,16 @@ public static class MarkdigExtensions
     {
         var relativeHtmlPath = string.Empty;
         pipeline.Extensions.AddIfNotAlready(new AutoLinkHeadingsExtension(relativeHtmlPath));
+
+        return pipeline;
+    }
+
+    /// <summary>
+    /// Adds target and rel attributes to external links.
+    /// </summary>
+    public static MarkdownPipelineBuilder UseExternalLinks(this MarkdownPipelineBuilder pipeline)
+    {
+        pipeline.Extensions.AddIfNotAlready(new ExternalLinksExtension());
 
         return pipeline;
     }

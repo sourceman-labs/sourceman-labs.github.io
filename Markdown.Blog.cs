@@ -16,7 +16,7 @@ public class MarkdownBlog(ILogger<MarkdownBlog> log, IWebHostEnvironment env, IV
     {
         IEnumerable<BlogPost> latestPosts = Posts.Where(IsVisible);
         if (tag != null)
-            latestPosts = latestPosts.Where(x => x.Tags.Contains(tag));
+            latestPosts = latestPosts.Where(x => x.Tags.Any(t => t.GenerateSlug() == tag.GenerateSlug()));
         if (year != null)
             latestPosts = latestPosts.Where(x => x.Date.GetValueOrDefault().Year == year);
         return latestPosts.OrderByDescending(x => x.Date).ToList();
