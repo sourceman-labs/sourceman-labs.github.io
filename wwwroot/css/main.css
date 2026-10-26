@@ -578,6 +578,95 @@ a.tag:visited {
   border-radius: 1px;
 }
 
+/* Glossary tooltip: shows on hover and keyboard focus */
+.post-content .glossary-term {
+  position: relative;
+  display: inline-block;
+  text-decoration: underline dotted;
+  text-decoration-color: var(--link-underline);
+  text-underline-offset: 0.2em;
+  cursor: help;
+}
+
+.post-content .glossary-term:focus-visible {
+  outline: 2px solid var(--link);
+  outline-offset: 2px;
+  border-radius: 1px;
+}
+
+.post-content .glossary-tip {
+  position: absolute;
+  bottom: calc(100% + 0.5rem);
+  left: 50%;
+  transform: translateX(calc(-50% + var(--tip-shift, 0px)));
+  z-index: 10;
+  width: max-content;
+  max-width: min(22rem, 80vw);
+  padding: 0.6rem 0.8rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--surface-1);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-style: normal;
+  line-height: 1.5;
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.12s ease, visibility 0.12s ease;
+}
+
+.post-content .glossary-tip strong {
+  color: var(--accent);
+}
+
+.post-content .glossary-term:hover .glossary-tip,
+.post-content .glossary-term:focus-visible .glossary-tip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Tooltip flipped below its trigger when there is no room above */
+.post-content .glossary-tip.tip-below {
+  bottom: auto;
+  top: calc(100% + 0.5rem);
+}
+
+/* Citation markers: small and raised, without adding line height */
+.post-content sup.cite {
+  font-size: 0.7em;
+  line-height: 0;
+  vertical-align: super;
+  margin-left: 0.1em;
+}
+
+.post-content sup.cite {
+  position: relative;
+}
+
+.post-content sup.cite a {
+  text-decoration: none;
+}
+
+/* Citation tooltip: shows the source title and URL on hover and focus */
+.post-content sup.cite .cite-tip {
+  font-size: 0.85rem;
+  overflow-wrap: anywhere;
+}
+
+.post-content sup.cite .cite-tip .cite-url {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.post-content sup.cite:hover .cite-tip,
+.post-content sup.cite:focus-within .cite-tip {
+  opacity: 1;
+  visibility: visible;
+}
+
 .post-content ul,
 .post-content ol {
   margin-bottom: 1.25rem;
