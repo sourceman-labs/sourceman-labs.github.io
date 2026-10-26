@@ -578,14 +578,9 @@ a.tag:visited {
   border-radius: 1px;
 }
 
-/* Tooltips: the paragraph is the containing block, so each tooltip spans
-   the paragraph width and stays on screen without JavaScript */
-.post-content p {
-  position: relative;
-}
-
 /* Glossary tooltip: shows on hover and keyboard focus */
 .post-content .glossary-term {
+  position: relative;
   display: inline-block;
   text-decoration: underline dotted;
   text-decoration-color: var(--link-underline);
@@ -602,9 +597,11 @@ a.tag:visited {
 .post-content .glossary-tip {
   position: absolute;
   bottom: calc(100% + 0.5rem);
-  left: 0;
-  right: 0;
+  left: 50%;
+  transform: translateX(calc(-50% + var(--tip-shift, 0px)));
   z-index: 10;
+  width: max-content;
+  max-width: min(22rem, 80vw);
   padding: 0.6rem 0.8rem;
   background: var(--bg-secondary);
   border: 1px solid var(--surface-1);
@@ -629,12 +626,22 @@ a.tag:visited {
   visibility: visible;
 }
 
+/* Tooltip flipped below its trigger when there is no room above */
+.post-content .glossary-tip.tip-below {
+  bottom: auto;
+  top: calc(100% + 0.5rem);
+}
+
 /* Citation markers: small and raised, without adding line height */
 .post-content sup.cite {
   font-size: 0.7em;
   line-height: 0;
   vertical-align: super;
   margin-left: 0.1em;
+}
+
+.post-content sup.cite {
+  position: relative;
 }
 
 .post-content sup.cite a {
