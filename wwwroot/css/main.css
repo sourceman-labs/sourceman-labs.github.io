@@ -547,6 +547,59 @@ a.tag:visited {
   margin-bottom: 1.25rem;
 }
 
+/* Tables follow the design system's Table: uppercase mono headers, hairline rows,
+   tabular numbers. A wide table scrolls sideways instead of breaking the layout. */
+.post-content table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.post-content th,
+.post-content td {
+  padding: 0.625rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+  text-align: left;
+}
+
+.post-content th {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* Every column after the first holds numbers in these posts. */
+.post-content th:not(:first-child),
+.post-content td:not(:first-child) {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.post-content tbody tr:hover {
+  background-color: var(--bg-secondary);
+}
+
+@media (max-width: 768px) {
+  .post-content table {
+    font-size: 0.8125rem;
+  }
+
+  .post-content th,
+  .post-content td {
+    padding: 0.5rem;
+  }
+}
+
 .post-content a,
 .about-page .about-outro a,
 .about-page .about-lede a {
