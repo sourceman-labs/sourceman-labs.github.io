@@ -1,0 +1,19 @@
+# Keeps the SHA-pinned actions current. The cooldown waits 30 days after a
+# release, so a compromised one has time to be found and pulled first.
+# Workflows dotagents syncs (label-sync.yml and others listed in
+# .claude/dotagents-state.json) are bumped upstream; a bump here is reverted
+# by the next sync.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    cooldown:
+      default-days: 30
+    groups:
+      github-actions:
+        patterns:
+          - "*"
+    commit-message:
+      prefix: ci
